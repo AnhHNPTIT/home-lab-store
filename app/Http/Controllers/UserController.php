@@ -23,7 +23,7 @@ class UserController extends Controller
 
     public function collaborator()
     {
-        $admins = Admin::where('level', 0)->orderBy('created_at', 'desc');
+        $admins = Admin::whereNot('level', 1)->orderBy('created_at', 'desc');
         return view('user.collaborators_list', ['admins' => $admins->paginate()]);
     }
 

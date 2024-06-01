@@ -99,9 +99,9 @@
                                                 </li>
                                             </ul>
 
-                                            <img class="em-alt-hover img-responsive em-lazy-loaded" src="{{asset('images/'.$item->image)}}" alt="{{$item->name}}" style="width: 100%;">
+                                            <img class="em-alt-hover img-responsive em-lazy-loaded" src="{{asset('images/products/'.$item->image)}}" alt="{{$item->name}}" style="width: 100%;">
 
-                                            <img class="img-responsive em-alt-org em-lazy-loaded" src="{{asset('images/'.$item->image)}}" alt="{{$item->name}}" style="width: 100%;">
+                                            <img class="img-responsive em-alt-org em-lazy-loaded" src="{{asset('images/products/'.$item->image)}}" alt="{{$item->name}}" style="width: 100%;">
                                         </a>
                                         <div class="em-element-display-hover bottom">
                                             <div class="quickshop-link-container">
@@ -158,9 +158,9 @@
                                         
                                         <a href="{{ url('/san-pham/'.$item->slug) }}" title="" class="product-image" id="link-result-search-product">
                                             <!--show label product - label extension is required-->
-                                            <img style="" class="em-alt-hover img-responsive em-lazy-loaded" src="{{asset('images/'.$item->image)}}" alt="{{$item->name}}" style="width: 100%;">
+                                            <img style="" class="em-alt-hover img-responsive em-lazy-loaded" src="{{asset('images/products/'.$item->image)}}" alt="{{$item->name}}" style="width: 100%;">
 
-                                            <img class="img-responsive em-alt-org em-lazy-loaded" src="{{asset('images/'.$item->image)}}" alt="{{$item->name}}" style="width: 100%;">
+                                            <img class="img-responsive em-alt-org em-lazy-loaded" src="{{asset('images/products/'.$item->image)}}" alt="{{$item->name}}" style="width: 100%;">
                                         </a>
                                         <div class="em-element-display-hover bottom">
                                             <div class="quickshop-link-container">
@@ -347,7 +347,7 @@
                             @foreach($most_interesting_products as $item)
                             <div class="item" style="margin-top : 30px;">
                                 <a href="{{ url('/san-pham/'.$item->slug) }}">
-                                    <img class="img-responsive em-alt-org em-lazy-loaded" src="{{asset('images/'.$item->image)}}" alt="{{$item->name}}" height="110" width="110">
+                                    <img class="img-responsive em-alt-org em-lazy-loaded" src="{{asset('images/products/'.$item->image)}}" alt="{{$item->name}}" height="110" width="110">
                                 </a>
                                 <div class="product-shop">
                                     <div class="f-fix">

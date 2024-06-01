@@ -88,7 +88,7 @@ Product Detail
 						</div>
 						<script>
 							var product_image = "<?php echo $product->image ?>";
-							$('#thumbnail').attr('src', '/images/'+product_image).width(150).height(200);
+							$('#thumbnail').attr('src', '/images/products/'+product_image).width(150).height(200);
 							function readURL(input) {
 								if (input.files && input.files[0]) {
 									var reader = new FileReader();
@@ -121,75 +121,6 @@ Product Detail
 							} );
 						</script>
 
-						<br>
-						<label for="" style="margin-top: 10px;">Thành phần</label>
-						<textarea name="active" id="getActive" rows="20" cols="100">
-						{{$product->active}}
-						</textarea>
-						<script>
-							var active = CKEDITOR.replace( 'active', {
-								filebrowserBrowseUrl: '{{ asset('ckfinder/ckfinder.html') }}',
-								filebrowserImageBrowseUrl: '{{ asset('ckfinder/ckfinder.html?type=Images') }}',
-								filebrowserFlashBrowseUrl: '{{ asset('ckfinder/ckfinder.html?type=Flash') }}',
-								filebrowserUploadUrl: '{{ asset('ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Files') }}',
-								filebrowserImageUploadUrl: '{{ asset('ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Images') }}',
-								filebrowserFlashUploadUrl: '{{ asset('ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Flash') }}'
-							} );
-
-						</script>
-
-						<br><label for="" style="margin-top: 10px;">Cách sử dụng</label>
-						<textarea name="frequence" id="getFrequence" rows="20" cols="100">
-						{{$product->frequence}}
-						</textarea>
-						<script>
-							var frequence = CKEDITOR.replace( 'frequence', {
-								filebrowserBrowseUrl: '{{ asset('ckfinder/ckfinder.html') }}',
-								filebrowserImageBrowseUrl: '{{ asset('ckfinder/ckfinder.html?type=Images') }}',
-								filebrowserFlashBrowseUrl: '{{ asset('ckfinder/ckfinder.html?type=Flash') }}',
-								filebrowserUploadUrl: '{{ asset('ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Files') }}',
-								filebrowserImageUploadUrl: '{{ asset('ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Images') }}',
-								filebrowserFlashUploadUrl: '{{ asset('ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Flash') }}'
-							} );
-						</script>
-
-						<br><label for="" style="margin-top: 10px;">Cách đóng gói</label>
-						<input type="text" class="form-control" id="getPacked" placeholder="Cách đóng gói" value="{{$product->packed}}"><br>
-
-
-						<br><label for="" style="margin-top: 10px;">Công dụng</label>
-						<textarea name="effect" id="getEffect" rows="20" cols="100">
-						{{$product->effect}}
-						</textarea>
-						<script>
-							var effect = CKEDITOR.replace( 'effect', {
-								filebrowserBrowseUrl: '{{ asset('ckfinder/ckfinder.html') }}',
-								filebrowserImageBrowseUrl: '{{ asset('ckfinder/ckfinder.html?type=Images') }}',
-								filebrowserFlashBrowseUrl: '{{ asset('ckfinder/ckfinder.html?type=Flash') }}',
-								filebrowserUploadUrl: '{{ asset('ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Files') }}',
-								filebrowserImageUploadUrl: '{{ asset('ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Images') }}',
-								filebrowserFlashUploadUrl: '{{ asset('ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Flash') }}'
-							} );
-						</script>
-
-						<br><label for="" style="margin-top: 10px;">Bảo quản</label>
-						<textarea name="maintain" id="getMaintain" rows="20" cols="100">
-						{{$product->maintain}}
-						</textarea>
-						<script>
-							var maintain = CKEDITOR.replace( 'maintain', {
-								filebrowserBrowseUrl: '{{ asset('ckfinder/ckfinder.html') }}',
-								filebrowserImageBrowseUrl: '{{ asset('ckfinder/ckfinder.html?type=Images') }}',
-								filebrowserFlashBrowseUrl: '{{ asset('ckfinder/ckfinder.html?type=Flash') }}',
-								filebrowserUploadUrl: '{{ asset('ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Files') }}',
-								filebrowserImageUploadUrl: '{{ asset('ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Images') }}',
-								filebrowserFlashUploadUrl: '{{ asset('ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Flash') }}'
-							} );
-						</script>
-
-						<br><label for="" style="margin-top: 10px;">Đối tượng sử dụng</label>
-						<textarea name="object" type="text" class="form-control" id="getObject" placeholder="Đối tượng sử dụng" rows="5" cols="10">{{$product->object}}</textarea><br>
-						
 						<label for="" style="margin-top: 10px;">Đơn vị tính</label>
 						<select name="units[]" id="select-state-unit" class="form-control" multiple style="width: 100%; margin-top: 0px;">
 								@if(isset($units))
@@ -250,12 +181,6 @@ Product Detail
 			form_data.append("product_category_id", $('select[name="product_categories[]"]').val());
 			form_data.append("manufacturer_id", $('select[name="manufacturers[]"]').val());
 			form_data.append("description", description.getData());
-			form_data.append("active", active.getData());
-			form_data.append("frequence", frequence.getData());
-			form_data.append("packed", $('#getPacked').val());
-			form_data.append("effect", effect.getData());
-			form_data.append("maintain", maintain.getData());
-			form_data.append("object", $('#getObject').val());
 			form_data.append('image', $('input[type=file]')[0].files[0]);
 			form_data.append("price_prime", $('#getPricePrime').val());
 			form_data.append("price", $('#getPrice').val());

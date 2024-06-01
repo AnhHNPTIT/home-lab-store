@@ -29,12 +29,6 @@ class ProductController extends Controller
                 'code' => 'required',
                 'product_category_id' => 'required',
                 'manufacturer_id' => 'required',
-                'active' => 'required',
-                'frequence' => 'required',
-                'packed' => 'required',
-                'effect' => 'required',
-                'maintain' => 'required',
-                'object' => 'required',
                 'price_prime' => 'required|numeric|min:0',
                 'price' => 'required|numeric|min:0',
                 'unit_id' => 'required',
@@ -48,12 +42,6 @@ class ProductController extends Controller
                 'code.required' => 'Mã sản phẩm không được để trống',
                 'product_category_id.required' => 'Phân loại sản phẩm không được để trống',
                 'manufacturer_id.required' => 'Nhà sản xuất không được để trống',
-                'active.required' => 'Thành phần sản phẩm không được để trống',
-                'frequence.required' => 'Cách sử dụng sản phẩm không được để trống',
-                'packed.required' => 'Cách đóng gói của sản phẩm không được để trống',
-                'effect.required' => 'Tác dụng của sản phẩm không được để trống',
-                'maintain.required' => 'Bảo quản sản phẩm không được để trống',
-                'object.required' => 'Đối tượng sử dụng sản phẩm không được để trống',
                 'price_prime.required' => 'Giá nhập sản phẩm không được để trống',
                 'price_prime.numeric' => 'Giá nhập của sản phẩm phải là số',
                 'price_prime.min' => 'Giá nhập của sản phẩm phải lớn hơn hoặc bằng 0',
@@ -96,7 +84,7 @@ class ProductController extends Controller
             $time = time();
             $data['slug'] = str_slug($data['name']) . '-' . $time;
             if ($files = $request->file('image')) {
-                $destinationPath = 'images/'; // upload path
+                $destinationPath = 'images/products/'; // upload path
                 $time = time();
                 $fileName = $time . "" . date('YmdHis') . "" . $files->hashName();
                 $files->move($destinationPath, $fileName);
@@ -136,12 +124,6 @@ class ProductController extends Controller
                 'code' => 'required',
                 'product_category_id' => 'required',
                 'manufacturer_id' => 'required',
-                'active' => 'required',
-                'frequence' => 'required',
-                'packed' => 'required',
-                'effect' => 'required',
-                'maintain' => 'required',
-                'object' => 'required',
                 'price_prime' => 'required|numeric|min:0',
                 'price' => 'required|numeric|min:0',
                 'unit_id' => 'required',
@@ -155,12 +137,6 @@ class ProductController extends Controller
                 'code.required' => 'Mã sản phẩm không được để trống',
                 'product_category_id.required' => 'Phân loại sản phẩm không được để trống',
                 'manufacturer_id.required' => 'Nhà sản xuất không được để trống',
-                'active.required' => 'Thành phần sản phẩm không được để trống',
-                'frequence.required' => 'Cách sử dụng sản phẩm không được để trống',
-                'packed.required' => 'Cách đóng gói của sản phẩm không được để trống',
-                'effect.required' => 'Tác dụng của sản phẩm không được để trống',
-                'maintain.required' => 'Bảo quản sản phẩm không được để trống',
-                'object.required' => 'Đối tượng sử dụng sản phẩm không được để trống',
                 'price_prime.required' => 'Giá nhập sản phẩm không được để trống',
                 'price_prime.numeric' => 'Giá nhập của sản phẩm phải là số',
                 'price_prime.min' => 'Giá nhập của sản phẩm phải lớn hơn hoặc bằng 0',
@@ -207,7 +183,7 @@ class ProductController extends Controller
             }
 
             if ($files = $request->file('image')) {
-                $destinationPath = 'images/'; // upload path
+                $destinationPath = 'images/products/'; // upload path
                 $time = time();
                 $fileName = $time . "" . date('YmdHis') . "" . $files->hashName();
                 $files->move($destinationPath, $fileName);
@@ -220,12 +196,6 @@ class ProductController extends Controller
                         'product_category_id' => $data['product_category_id'],
                         'manufacturer_id' => $data['manufacturer_id'],
                         'description' => $data['description'],
-                        'active' => $data['active'],
-                        'packed' => $data['packed'],
-                        'frequence' => $data['frequence'],
-                        'effect' => $data['effect'],
-                        'maintain' => $data['maintain'],
-                        'object' => $data['object'],
                         'image' => $data['image'],
                         'price_prime' => $data['price_prime'],
                         'price' => $data['price'],
@@ -242,12 +212,6 @@ class ProductController extends Controller
                         'product_category_id' => $data['product_category_id'],
                         'manufacturer_id' => $data['manufacturer_id'],
                         'description' => $data['description'],
-                        'active' => $data['active'],
-                        'packed' => $data['packed'],
-                        'frequence' => $data['frequence'],
-                        'effect' => $data['effect'],
-                        'maintain' => $data['maintain'],
-                        'object' => $data['object'],
                         'price_prime' => $data['price_prime'],
                         'price' => $data['price'],
                         'unit_id' => $data['unit_id'],

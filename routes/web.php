@@ -30,10 +30,6 @@ use App\Http\Controllers\Customer\LoginController as CustomerLoginController;
 use App\Http\Controllers\Customer\LogoutController as CustomerLogoutController;
 use App\Http\Controllers\Customer\RegisterController as CustomerRegisterController;
 use App\Http\Controllers\Customer\SearchController as CustomerSearchController;
-use App\Http\Controllers\Customer\VitaminProductController as CustomerVitaminProductController;
-use App\Http\Controllers\Customer\EnergyProductController as CustomerEnergyProductController;
-use App\Http\Controllers\Customer\FiberProductController as CustomerFiberProductController;
-use App\Http\Controllers\Customer\SpecialProductController as CustomerSpecialProductController;
 use App\Http\Controllers\Customer\HomeController as CustomerHomeController;
 use App\Http\Controllers\Customer\CartController as CustomerCartController;
 use App\Http\Controllers\Customer\CheckoutController as CustomerCheckoutController;
@@ -42,6 +38,7 @@ use App\Http\Controllers\Customer\ChangePasswordController as CustomerChangePass
 use App\Http\Controllers\Customer\WishlistController as CustomerWishlistController;
 use App\Http\Controllers\Customer\TransactionHistoryController as CustomerTransactionHistoryController;
 use App\Http\Controllers\Customer\ContactController as CustomerContactController;
+use App\Http\Controllers\Customer\ProductController as CustomerProductController;
 
 // trang chu 
 Route::get('/', function () {
@@ -73,16 +70,13 @@ Route::post('/create/account', [CustomerRegisterController::class, 'createAccoun
 Route::get('/search', [CustomerSearchController::class, 'search']);
 
 // danh mục sản phẩm
-Route::get('/cua-hang/bo-sung-vitamin-khoang-chat', [CustomerVitaminProductController::class, 'vitaminProduct']);
-Route::get('/cua-hang/nuoc-tang-luc-giai-khat', [CustomerEnergyProductController::class, 'energyProduct']);
-Route::get('/cua-hang/giau-chat-xo-tieu-hoa', [CustomerFiberProductController::class, 'fiberProduct']);
-Route::get('/cua-hang/chuc-nang-dac-biet', [CustomerSpecialProductController::class, 'specialProduct']);
+Route::get('/danh-muc/{slug}', [CustomerProductController::class, 'index']);
 
 // chi tiet san pham 
 Route::get('/san-pham/{slug}', [CustomerHomeController::class, 'productDetail']);
 
 // tat ca bai viet 
-Route::get('/ban-tin-suc-khoe', [CustomerHomeController::class, 'index']);
+Route::get('/tin-tuc-su-kien', [CustomerHomeController::class, 'index']);
 
 // bai viet theo tag 
 Route::get('/tag/{slug}', [CustomerHomeController::class, 'postTag']);
@@ -91,7 +85,7 @@ Route::get('/tag/{slug}', [CustomerHomeController::class, 'postTag']);
 Route::get('/chuyen-muc/{slug}', [CustomerHomeController::class, 'postTopic']);
 
 //chi tiet + noi dung bai viet  
-Route::get('/ban-tin-suc-khoe/{slug}', [CustomerHomeController::class, 'postDetail']);
+Route::get('/tin-tuc-su-kien/{slug}', [CustomerHomeController::class, 'postDetail']);
 
 // cart 
 Route::post('/add/item', [CustomerCartController::class, 'addSpecialItem']);

@@ -22,7 +22,7 @@
                             <div class="" style="text-align : justify; padding: 10px 10px; line-height : 30px;">
                                 <p><strong>VỀ CHÚNG TÔI</strong></p>
 
-                                <p>Công ty Cổ phần Mỹ phẩm Thiên nhiên Cỏ Mềm - Home Lab là nơi chuyên cung cấp các thực phẩm chức năng cho mọi lứa tuổi.</p>
+                                <p>Công ty Cổ phần Mỹ phẩm Thiên nhiên Cỏ Mềm - Home Lab là nơi chuyên cung cấp các sản phẩm cho mọi lứa tuổi.</p>
 
                                 <p>Với đội ngũ nhân viên tư vấn chuyên môn tốt, chúng tôi mong muốn mang lại những sản phẩm tốt, nguồn gốc rõ ràng; những tư vấn hữu ích nhất cho các bạn.</p>
 

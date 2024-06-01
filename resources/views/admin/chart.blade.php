@@ -53,27 +53,7 @@ Trang chủ
 </div>
 
 <div class="row">
-    <div class="col-md-6 col-sm-6 col-xs-12">
-        <!-- DONUT CHART -->
-        <div class="box box-info">
-        <div class="box-header with-btransaction">
-            <h3 class="box-title">Phân loại sản phẩm</h3>
-
-            <div class="box-tools pull-right">
-            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-            </button>
-            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-            </div>
-        </div>
-        <div class="box-body">
-            <canvas id="pieChart" style="height:250px; max-heigth:250px; min-heigth:250px;"></canvas>
-        </div>
-        <!-- /.box-body -->
-        </div>
-        <!-- /.box -->
-    </div>
-
-	<div class="col-md-6 col-sm-6 col-xs-12">
+	<div class="col-md-12 col-sm-12 col-xs-12">
 		<!-- AREA CHART -->
 		<div class="box box-info">
 		<div class="box-header with-btransaction">
@@ -228,73 +208,6 @@ Trang chủ
     var lineChart                = new Chart(lineChartCanvas)
     lineChartOptions.datasetFill = false
     lineChart.Line(lineChartData, lineChartOptions)
-
-
-
-    /* ChartJS
-     * -------
-     * Here we will create a few charts using ChartJS
-     */
-
-    //-------------
-    //- PIE CHART -
-    //-------------
-    // Get context with jQuery - using jQuery's .get() method.
-    var pieChartCanvas = $('#pieChart').get(0).getContext('2d')
-    var pieChart       = new Chart(pieChartCanvas)
-    var PieData        = [
-        {
-            value    : {{$total_vitamin_product}},
-            color    : '#2298FE',
-            highlight: '#2298FE',
-            label    : 'Bổ sung vitamin & khoáng chất'
-        },
-        {
-            value    : {{$total_energy_product}},
-            color    : '#FE22F4',
-            highlight: '#FE22F4',
-            label    : 'Nước tăng lực & giải khát'
-        },
-        {
-            value    : {{$total_fiber_product}},
-            color    : '#44F801',
-            highlight: '#44F801',
-            label    : 'Giàu chất xơ tiêu hóa'
-        },
-        {
-            value    : {{$total_special_product}},
-            color    : '#F89201 ',
-            highlight: '#F89201 ',
-            label    : 'Chức năng đặc biệt'
-        }
-    ]
-    var pieOptions     = {
-      //Boolean - Whether we should show a stroke on each segment
-      segmentShowStroke    : true,
-      //String - The colour of each segment stroke
-      segmentStrokeColor   : '#fff',
-      //Number - The width of each segment stroke
-      segmentStrokeWidth   : 2,
-      //Number - The percentage of the chart that we cut out of the middle
-      percentageInnerCutout: 50, // This is 0 for Pie charts
-      //Number - Amount of animation steps
-      animationSteps       : 100,
-      //String - Animation easing effect
-      animationEasing      : 'easeOutBounce',
-      //Boolean - Whether we animate the rotation of the Doughnut
-      animateRotate        : true,
-      //Boolean - Whether we animate scaling the Doughnut from the centre
-      animateScale         : false,
-      //Boolean - whether to make the chart responsive to window resizing
-      responsive           : true,
-      // Boolean - whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container
-      maintainAspectRatio  : true,
-      //String - A legend template
-      legendTemplate       : '<ul class="<%=name.toLowerCase()%>-legend"><% for (var i=0; i<segments.length; i++){%><li><span style="background-color:<%=segments[i].fillColor%>"></span><%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>'
-    }
-    //Create pie or douhnut chart
-    // You can switch between pie and douhnut using the method below.
-    pieChart.Doughnut(PieData, pieOptions)
 
     //-------------
     //- BAR CHART -

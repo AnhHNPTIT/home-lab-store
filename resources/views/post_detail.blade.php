@@ -136,10 +136,10 @@
                                 <ul class="em-recent-post">
                                     @foreach($recent_posts as $post)
                                     <li class="item">
-                                        <a href="{{ url('/ban-tin-suc-khoe/'.$post->slug) }}">
-                                            <img alt="{{ url('/ban-tin-suc-khoe/'.$post->slug) }}" src="{{asset('/images/'.$post->thumbnail)}}" />
+                                        <a href="{{ url('/tin-tuc-su-kien/'.$post->slug) }}">
+                                            <img alt="{{ url('/tin-tuc-su-kien/'.$post->slug) }}" src="{{asset('/images/posts/'.$post->thumbnail)}}" />
                                         </a>
-                                        <a class="post-title em-blog-title" href="{{ url('/ban-tin-suc-khoe/'.$post->slug) }}" style="text-transform: capitalize !important;">
+                                        <a class="post-title em-blog-title" href="{{ url('/tin-tuc-su-kien/'.$post->slug) }}" style="text-transform: capitalize !important;">
                                             {{$post->title}}
                                         </a>
                                         <p class="intro">

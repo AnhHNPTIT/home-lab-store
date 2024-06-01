@@ -60,7 +60,7 @@ Giỏ hàng - Home Lab
                                                     <div class="cart-product" style="width : 100px; height : 150px; box-sizing : border-box;">
                                                         <button type="button" data-id={{$id}} title="Xóa" class="btn-remove btn-remove2 remove-cart">Xóa sản phẩm</button>
                                                         <a href="{{ url('/san-pham/'.$item['slug']) }}">
-                                                            <img src="{{asset('images/'.$item['image'])}}" alt="{{$item['name']}}" style="width : 100%; height : auto;" />
+                                                            <img src="{{asset('images/products/'.$item['image'])}}" alt="{{$item['name']}}" style="width : 100%; height : auto;" />
                                                         </a>
                                                     </div>
                                                 </td>

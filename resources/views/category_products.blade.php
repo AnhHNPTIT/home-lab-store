@@ -1,8 +1,11 @@
 @extends('layouts.master_home')
 
-@section('title')
-Danh mục sản phẩm - Home Lab
-@endsection
+@section('title') 
+@if(isset($product))
+{{$product->name}}
+@else Danh sách sản phẩm
+@endif 
+@endsection 
 
 @section('css')
 <link rel="stylesheet" href="{{asset('plugins/bootstrap-slider/slider.css')}}">
@@ -73,9 +76,9 @@ Danh mục sản phẩm - Home Lab
                             <div class="toolbar-top">
                                 <div class="toolbar">
                                     <div class="sorter">
-                                        @if(isset($title))
+                                        @if(isset($product))
                                         <p class="view-mode" style="color : #3E6807; font-weight : 500; border : 1px solid #3E6807; margin-left : 20px;">
-                                            {{$title}}
+                                            {{$product->name}}
                                         </p>
                                         @endif
 
@@ -146,9 +149,9 @@ Danh mục sản phẩm - Home Lab
                                                             </li>
                                                         </ul>
 
-                                                        <img class="em-alt-hover img-responsive em-lazy-loaded" src="{{asset('images/'.$item->image)}}" alt="{{$item->name}}" style="width: 100%;">
+                                                        <img class="em-alt-hover img-responsive em-lazy-loaded" src="{{asset('images/products/'.$item->image)}}" alt="{{$item->name}}" style="width: 100%;">
 
-                                                        <img class="img-responsive em-alt-org em-lazy-loaded" src="{{asset('images/'.$item->image)}}" alt="{{$item->name}}" style="width: 100%;">
+                                                        <img class="img-responsive em-alt-org em-lazy-loaded" src="{{asset('images/products/'.$item->image)}}" alt="{{$item->name}}" style="width: 100%;">
                                                     </a>
                                                     <div class="em-element-display-hover bottom">
                                                         <div class="quickshop-link-container">
@@ -213,9 +216,9 @@ Danh mục sản phẩm - Home Lab
                                                 <div class="product-shop-top">
                                                     <a href="{{ url('/san-pham/'.$item->slug) }}" class="product-image">
                                                         <!--show label product - label extension is required-->
-                                                        <img class="em-alt-hover img-responsive em-lazy-loaded" src="{{asset('images/'.$item->image)}}" alt="{{$item->name}}" style="width: 100%;">
+                                                        <img class="em-alt-hover img-responsive em-lazy-loaded" src="{{asset('images/products/'.$item->image)}}" alt="{{$item->name}}" style="width: 100%;">
 
-                                                        <img class="img-responsive em-alt-org em-lazy-loaded" src="{{asset('images/'.$item->image)}}" alt="{{$item->name}}" style="width: 100%;">
+                                                        <img class="img-responsive em-alt-org em-lazy-loaded" src="{{asset('images/products/'.$item->image)}}" alt="{{$item->name}}" style="width: 100%;">
                                                     </a>
                                                     <div class="em-element-display-hover bottom">
                                                         <div class="quickshop-link-container">
@@ -372,252 +375,6 @@ Danh mục sản phẩm - Home Lab
 
 
                     <div class="col-sm-6 col-sm-pull-18 em-col-left em-sidebar">
-                        <div id="menuleftText" class="all_categories">
-                            <div class="menuleftText-title">
-                                <div class="menuleftText" style="width: 300px;"><span class="em-text-upercase">Danh mục sản phẩm</span>
-                                </div>
-                            </div>
-                        </div><!-- /.menuleftText -->
-
-                        <div class="menuleft">
-                            <div id="menu-default" class="mega-menu em-menu-icon">
-                                <div class="megamenu-wrapper wrapper-5_4607">
-                                    <div class="em_nav" id="toogle_menu_5_4607">
-                                        <ul class="vnav em-menu-icon effect-menu em-menu-long">
-                                            <li class="menu-item-link menu-item-depth-0 fa fa-dropbox menu-item-parent" style="width: 300px;">
-                                                <a class="em-menu-link" href="{{ url('/cua-hang/bo-sung-vitamin-khoang-chat') }}"> <span style="text-transform: uppercase;"> Bổ sung vitamin & khoáng chất </span> </a>
-                                                <ul class="menu-container">
-                                                    <li class="menu-item-hbox menu-item-depth-1 col-menu menu_col10  fix-top menu-item-parent" style="">
-                                                        <ul class="menu-container">
-                                                            <li class="menu-item-vbox menu-item-depth-2 col-sm-12 alpha menu-item-parent" style="">
-                                                                <ul class="menu-container">
-                                                                    <li class="menu-item-text menu-item-depth-3  ">
-
-                                                                        <div class="padding-top20">
-                                                                            <ul class="em-catalog-navigation vertical">
-                                                                                @if(isset($menu_vitamin_products_asc))
-                                                                                @foreach($menu_vitamin_products_asc as $i => $item)
-                                                                                @if(0 <= $i && $i < 8) <li class="level0 nav-1">
-                                                                                    @if(strlen($item->name) < 30) <a href="{{url('san-pham/'.$item->slug)}}"> <span>{{$item->name}}</span> </a>
-                                                                                        @else
-                                                                                        <a href="{{url('san-pham/'.$item->slug)}}"> <span>{{substr($item->name, 0, 30)}}...</span> </a>
-                                                                                        @endif
-                                                                    </li>
-                                                                    @endif
-                                                                    @endforeach
-                                                                    @endif
-                                                                </ul>
-                                    </div>
-                                    </li>
-                                    </ul>
-                                    </li><!-- /.menu-item-vbox -->
-
-                                    <li class="menu-item-vbox menu-item-depth-2 col-sm-12 menu-item-parent" style="">
-                                        <ul class="menu-container">
-                                            <li class="menu-item-text menu-item-depth-3  ">
-                                                <div class="padding-top20">
-                                                    <ul class="em-catalog-navigation vertical">
-                                                        @if(isset($menu_vitamin_products_asc))
-                                                        @foreach($menu_vitamin_products_asc as $i => $item)
-                                                        @if(8 <= $i) <li class="level0 nav-1 first">
-                                                            @if(strlen($item->name) < 30) <a href="{{url('san-pham/'.$item->slug)}}"> <span>{{$item->name}}</span> </a>
-                                                                @else
-                                                                <a href="{{url('san-pham/'.$item->slug)}}"> <span>{{substr($item->name, 0, 30)}}...</span> </a>
-                                                                @endif
-                                            </li>
-                                            @endif
-                                            @endforeach
-                                            <li class="level0 nav-2">
-                                                <a href="{{ url('/cua-hang/bo-sung-vitamin-khoang-chat') }}"> <span>Xem thêm...</span> </a>
-                                            </li>
-                                            @endif
-                                        </ul>
-                                </div>
-                                </li>
-                                </ul>
-                                </li><!-- /.menu-item-vbox -->
-                                </ul>
-                                </li><!-- /.menu-item-hbox -->
-                                </ul>
-                                </li><!-- /.menu-item-link -->
-
-
-                                <li class="menu-item-link menu-item-depth-0 fa fa-dropbox menu-item-parent" style="width: 300px;">
-                                    <a class="em-menu-link" href="{{ url('/cua-hang/nuoc-tang-luc-giai-khat') }}"> <span style="text-transform: uppercase;"> Nước tăng lực & giải khát </span> </a>
-                                    <ul class="menu-container">
-                                        <li class="menu-item-hbox menu-item-depth-1 col-menu menu_col10  fix-top menu-item-parent" style="">
-                                            <ul class="menu-container">
-                                                <li class="menu-item-vbox menu-item-depth-2 col-sm-12 alpha menu-item-parent" style="">
-                                                    <ul class="menu-container">
-                                                        <li class="menu-item-text menu-item-depth-3  ">
-
-                                                            <div class="padding-top20">
-                                                                <ul class="em-catalog-navigation vertical">
-                                                                    @if(isset($menu_energy_products_asc))
-                                                                    @foreach($menu_energy_products_asc as $i => $item)
-                                                                    @if(0 <= $i && $i < 8) <li class="level0 nav-1">
-                                                                        @if(strlen($item->name) < 30) <a href="{{url('san-pham/'.$item->slug)}}"> <span>{{$item->name}}</span> </a>
-                                                                            @else
-                                                                            <a href="{{url('san-pham/'.$item->slug)}}"> <span>{{substr($item->name, 0, 30)}}...</span> </a>
-                                                                            @endif
-                                                        </li>
-                                                        @endif
-                                                        @endforeach
-                                                        @endif
-                                                    </ul>
-                            </div>
-                            </li>
-                            </ul>
-                            </li><!-- /.menu-item-vbox -->
-
-                            <li class="menu-item-vbox menu-item-depth-2 col-sm-12 menu-item-parent" style="">
-                                <ul class="menu-container">
-                                    <li class="menu-item-text menu-item-depth-3  ">
-                                        <div class="padding-top20">
-                                            <ul class="em-catalog-navigation vertical">
-                                                @if(isset($menu_energy_products_asc))
-                                                @foreach($menu_energy_products_asc as $i => $item)
-                                                @if(8 <= $i) <li class="level0 nav-1 first">
-                                                    @if(strlen($item->name) < 30) <a href="{{url('san-pham/'.$item->slug)}}"> <span>{{$item->name}}</span> </a>
-                                                        @else
-                                                        <a href="{{url('san-pham/'.$item->slug)}}"> <span>{{substr($item->name, 0, 30)}}...</span> </a>
-                                                        @endif
-                                    </li>
-                                    @endif
-                                    @endforeach
-                                    <li class="level0 nav-2">
-                                        <a href="{{ url('/cua-hang/nuoc-tang-luc-giai-khat') }}"> <span>Xem thêm...</span> </a>
-                                    </li>
-                                    @endif
-                                </ul>
-                        </div>
-                        </li>
-                        </ul>
-                        </li><!-- /.menu-item-vbox -->
-                        </ul>
-                        </li><!-- /.menu-item-hbox -->
-                        </ul>
-                        </li><!-- /.menu-item-link -->
-
-                        <li class="menu-item-link menu-item-depth-0 fa fa-dropbox menu-item-parent" style="width: 300px;">
-                            <a class="em-menu-link" href="{{ url('/cua-hang/giau-chat-xo-tieu-hoa') }}"> <span style="text-transform: uppercase;"> Giàu chất xơ tiêu hóa </span> </a>
-                            <ul class="menu-container">
-                                <li class="menu-item-hbox menu-item-depth-1 col-menu menu_col10  fix-top menu-item-parent" style="">
-                                    <ul class="menu-container">
-                                        <li class="menu-item-vbox menu-item-depth-2 col-sm-12 alpha menu-item-parent" style="">
-                                            <ul class="menu-container">
-                                                <li class="menu-item-text menu-item-depth-3  ">
-
-                                                    <div class="padding-top20">
-                                                        <ul class="em-catalog-navigation vertical">
-                                                            @if(isset($menu_fiber_products_asc))
-                                                            @foreach($menu_fiber_products_asc as $i => $item)
-                                                            @if(0 <= $i && $i < 8) <li class="level0 nav-1">
-                                                                @if(strlen($item->name) < 30) <a href="{{url('san-pham/'.$item->slug)}}"> <span>{{$item->name}}</span> </a>
-                                                                    @else
-                                                                    <a href="{{url('san-pham/'.$item->slug)}}"> <span>{{substr($item->name, 0, 30)}}...</span> </a>
-                                                                    @endif
-                                                </li>
-                                                @endif
-                                                @endforeach
-                                                @endif
-                                            </ul>
-                    </div>
-                    </li>
-                    </ul>
-                    </li><!-- /.menu-item-vbox -->
-
-                    <li class="menu-item-vbox menu-item-depth-2 col-sm-12 menu-item-parent" style="">
-                        <ul class="menu-container">
-                            <li class="menu-item-text menu-item-depth-3  ">
-                                <div class="padding-top20">
-                                    <ul class="em-catalog-navigation vertical">
-                                        @if(isset($menu_fiber_products_asc))
-                                        @foreach($menu_fiber_products_asc as $i => $item)
-                                        @if(8 <= $i) <li class="level0 nav-1 first">
-                                            @if(strlen($item->name) < 30) <a href="{{url('san-pham/'.$item->slug)}}"> <span>{{$item->name}}</span> </a>
-                                                @else
-                                                <a href="{{url('san-pham/'.$item->slug)}}"> <span>{{substr($item->name, 0, 30)}}...</span> </a>
-                                                @endif
-                            </li>
-                            @endif
-                            @endforeach
-                            <li class="level0 nav-2">
-                                <a href="{{ url('/cua-hang/giau-chat-xo-tieu-hoa') }}"> <span>Xem thêm...</span> </a>
-                            </li>
-                            @endif
-                        </ul>
-                </div>
-                </li>
-                </ul>
-                </li><!-- /.menu-item-vbox -->
-                </ul>
-                </li><!-- /.menu-item-hbox -->
-                </ul>
-                </li><!-- /.menu-item-link -->
-
-                <li class="menu-item-link menu-item-depth-0 fa fa-dropbox menu-item-parent" style="width: 300px;">
-                    <a class="em-menu-link" href="{{ url('/cua-hang/chuc-nang-dac-biet') }}"> <span style="text-transform: uppercase;"> Chức năng đặc biệt </span> </a>
-                    <ul class="menu-container">
-                        <li class="menu-item-hbox menu-item-depth-1 col-menu menu_col10  fix-top menu-item-parent" style="">
-                            <ul class="menu-container">
-                                <li class="menu-item-vbox menu-item-depth-2 col-sm-12 alpha menu-item-parent" style="">
-                                    <ul class="menu-container">
-                                        <li class="menu-item-text menu-item-depth-3  ">
-
-                                            <div class="padding-top20">
-                                                <ul class="em-catalog-navigation vertical">
-                                                    @if(isset($menu_special_products_asc))
-                                                    @foreach($menu_special_products_asc as $i => $item)
-                                                    @if(0 <= $i && $i < 8) <li class="level0 nav-1">
-                                                        @if(strlen($item->name) < 30) <a href="{{url('san-pham/'.$item->slug)}}"> <span>{{$item->name}}</span> </a>
-                                                            @else
-                                                            <a href="{{url('san-pham/'.$item->slug)}}"> <span>{{substr($item->name, 0, 30)}}...</span> </a>
-                                                            @endif
-                                        </li>
-                                        @endif
-                                        @endforeach
-                                        @endif
-                                    </ul>
-            </div>
-            </li>
-            </ul>
-            </li><!-- /.menu-item-vbox -->
-
-            <li class="menu-item-vbox menu-item-depth-2 col-sm-12 menu-item-parent" style="">
-                <ul class="menu-container">
-                    <li class="menu-item-text menu-item-depth-3  ">
-                        <div class="padding-top20">
-                            <ul class="em-catalog-navigation vertical">
-                                @if(isset($menu_special_products_asc))
-                                @foreach($menu_special_products_asc as $i => $item)
-                                @if(8 <= $i) <li class="level0 nav-1 first">
-                                    @if(strlen($item->name) < 30) <a href="{{url('san-pham/'.$item->slug)}}"> <span>{{$item->name}}</span> </a>
-                                        @else
-                                        <a href="{{url('san-pham/'.$item->slug)}}"> <span>{{substr($item->name, 0, 30)}}...</span> </a>
-                                        @endif
-                    </li>
-                    @endif
-                    @endforeach
-                    <li class="level0 nav-2">
-                        <a href="{{ url('/cua-hang/chuc-nang-dac-biet') }}"> <span>Xem thêm...</span> </a>
-                    </li>
-                    @endif
-                </ul>
-        </div>
-        </li>
-        </ul>
-        </li><!-- /.menu-item-vbox -->
-        </ul>
-        </li><!-- /.menu-item-hbox -->
-        </ul>
-        </li><!-- /.menu-item-link -->
-
-        </ul><!-- /.vnav -->
-    </div>
-</div><!-- /.megamenu-wrapper -->
-</div>
-</div><!-- /.menuleft -->
 
 <div class="em-line-01 block block-layered-nav">
 
@@ -739,59 +496,18 @@ Danh mục sản phẩm - Home Lab
         <strong><span style="color : #fff;">Giá bán (VND)</span></strong>
     </div>
 
-    @if($title == "Bổ sung vitamin & khoáng chất")
-    @if(isset($price_sale_min_vitamin_product) && isset($price_sale_max_vitamin_product))
+    
     <div class="block-content" style="text-align : center;">
-        <input id="price-slider-amount" type="text" value="" class="slider form-control" data-slider-min="{{ $price_sale_min_vitamin_product*1000 }}" data-slider-max="{{ $price_sale_max_vitamin_product*1000 }}" data-slider-step="1" <?php if (isset($min_price) && isset($max_price)) { ?> data-slider-value="[<?php echo $min_price * 1000; ?>,<?php echo $max_price * 1000; ?>]" <?php } else { ?> data-slider-value="[20000,30000]" <?php } ?> data-slider-orientation="horizontal" data-slider-selection="before" data-slider-tooltip="show" data-slider-id="aqua">
+        <input id="price-slider-amount" type="text" value="" class="slider form-control" data-slider-min="{{ $price_sale_min*1000 }}" data-slider-max="{{ $price_sale_max*1000 }}" data-slider-step="1" <?php if (isset($min_price) && isset($max_price)) { ?> data-slider-value="[<?php echo $min_price * 1000; ?>,<?php echo $max_price * 1000; ?>]" <?php } else { ?> data-slider-value="[20000,30000]" <?php } ?> data-slider-orientation="horizontal" data-slider-selection="before" data-slider-tooltip="show" data-slider-id="aqua">
         <div class="" style="font-size : 12px;">
             Giá từ:
-            <span class="from">{{number_format($price_sale_min_vitamin_product*1000 ,0 ,'.' ,'.')}} VND</span>
+            <span class="from">{{number_format($price_sale_min*1000 ,0 ,'.' ,'.')}} VND</span>
             —
-            <span class="to">{{number_format($price_sale_max_vitamin_product*1000 ,0 ,'.' ,'.')}} VND</span>
+            <span class="to">{{number_format($price_sale_max*1000 ,0 ,'.' ,'.')}} VND</span>
         </div>
         <button type="button" class="button btn-price-slider" style="margin-top : 15px; font-size : 13px;">Lọc theo giá</button>
     </div>
-    @endif
-    @elseif($title == "Nước tăng lực & giải khát")
-    @if(isset($price_sale_min_energy_product) && isset($price_sale_max_energy_product))
-    <div class="block-content" style="text-align : center;">
-        <input id="price-slider-amount" type="text" value="" class="slider form-control" data-slider-min="{{ $price_sale_min_energy_product*1000 }}" data-slider-max="{{ $price_sale_max_energy_product*1000 }}" data-slider-step="1" <?php if (isset($min_price) && isset($max_price)) { ?> data-slider-value="[<?php echo $min_price * 1000; ?>,<?php echo $max_price * 1000; ?>]" <?php } else { ?> data-slider-value="[20000,30000]" <?php } ?> data-slider-orientation="horizontal" data-slider-selection="before" data-slider-tooltip="show" data-slider-id="aqua">
-        <div class="" style="font-size : 12px;">
-            Giá từ:
-            <span class="from">{{number_format($price_sale_min_energy_product*1000 ,0 ,'.' ,'.')}} VND</span>
-            —
-            <span class="to">{{number_format($price_sale_max_energy_product*1000 ,0 ,'.' ,'.')}} VND</span>
-        </div>
-        <button type="button" class="button btn-price-slider" style="margin-top : 15px; font-size : 13px;">Lọc theo giá</button>
-    </div>
-    @endif
-    @elseif($title == "Giàu chất xơ tiêu hóa")
-    @if(isset($price_sale_min_fiber_product) && isset($price_sale_max_fiber_product))
-    <div class="block-content" style="text-align : center;">
-        <input id="price-slider-amount" type="text" value="" class="slider form-control" data-slider-min="{{ $price_sale_min_fiber_product*1000 }}" data-slider-max="{{ $price_sale_max_fiber_product*1000 }}" data-slider-step="1" <?php if (isset($min_price) && isset($max_price)) { ?> data-slider-value="[<?php echo $min_price * 1000; ?>,<?php echo $max_price * 1000; ?>]" <?php } else { ?> data-slider-value="[20000,30000]" <?php } ?> data-slider-orientation="horizontal" data-slider-selection="before" data-slider-tooltip="show" data-slider-id="aqua">
-        <div class="" style="font-size : 12px;">
-            Giá từ:
-            <span class="from">{{number_format($price_sale_min_fiber_product*1000 ,0 ,'.' ,'.')}} VND</span>
-            —
-            <span class="to">{{number_format($price_sale_max_fiber_product*1000 ,0 ,'.' ,'.')}} VND</span>
-        </div>
-        <button type="button" class="button btn-price-slider" style="margin-top : 15px; font-size : 13px;">Lọc theo giá</button>
-    </div>
-    @endif
-    @elseif($title == "Chức năng đặc biệt")
-    @if(isset($price_sale_min_special_product) && isset($price_sale_max_special_product))
-    <div class="block-content" style="text-align : center;">
-        <input id="price-slider-amount" type="text" value="" class="slider form-control" data-slider-min="{{ $price_sale_min_special_product*1000 }}" data-slider-max="{{ $price_sale_max_special_product*1000 }}" data-slider-step="1" <?php if (isset($min_price) && isset($max_price)) { ?> data-slider-value="[<?php echo $min_price * 1000; ?>,<?php echo $max_price * 1000; ?>]" <?php } else { ?> data-slider-value="[20000,30000]" <?php } ?> data-slider-orientation="horizontal" data-slider-selection="before" data-slider-tooltip="show" data-slider-id="aqua">
-        <div class="" style="font-size : 12px;">
-            Giá từ:
-            <span class="from">{{number_format($price_sale_min_special_product*1000 ,0 ,'.' ,'.')}} VND</span>
-            —
-            <span class="to">{{number_format($price_sale_max_special_product*1000 ,0 ,'.' ,'.')}} VND</span>
-        </div>
-        <button type="button" class="button btn-price-slider" style="margin-top : 15px; font-size : 13px;">Lọc theo giá</button>
-    </div>
-    @endif
-    @endif
+    
 
 
 

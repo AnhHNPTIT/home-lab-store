@@ -12,7 +12,7 @@ Products List
 		<div class="col-xs-12">
 			<div class="box">
 				<div class="box-header">
-					<h3 class="box-title">Danh sách thực phẩm chức năng</h3>
+					<h3 class="box-title">Danh sách sản phẩm</h3>
 				</div>
 				<!-- /.box-header -->
 				<div class="box-body">
@@ -85,7 +85,7 @@ Products List
 					<table id="list-products" class="table table-bordered table-striped" style="margin-top : 10px;">
 						<thead>
 							<tr>
-								<th class="col-sm-2" style="text-align: center;">Tên thực phẩm chức năng</th>
+								<th class="col-sm-2" style="text-align: center;">Tên sản phẩm</th>
 								<th class="col-sm-1" style="text-align: center;">Mã</th>
 								<th class="col-sm-1" style="text-align: center;">Số lượng còn</th>
 								<th class="col-sm-1" style="text-align: center;">Số lượng đã bán</th>

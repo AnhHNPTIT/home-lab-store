@@ -54,7 +54,7 @@ class PostController extends Controller
             $time = time();
             $data['slug'] = str_slug($data['title']) . '-' . $time;
             if ($files = $request->file('thumbnail')) {
-                $destinationPath = 'images/'; // upload path
+                $destinationPath = 'images/posts/'; // upload path
                 $time = time();
                 $fileName = $time . "" . date('YmdHis') . "" . $files->hashName();
                 $files->move($destinationPath, $fileName);
@@ -186,7 +186,7 @@ class PostController extends Controller
             $time = time();
             $data['slug'] = str_slug($data['title']) . '-' . $time;
             if ($files = $request->file('thumbnail')) {
-                $destinationPath = 'images/'; // upload path
+                $destinationPath = 'images/posts'; // upload path
                 $time = time();
                 $fileName = $time . "" . date('YmdHis') . "" . $files->hashName();
                 $files->move($destinationPath, $fileName);

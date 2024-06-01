@@ -36,7 +36,7 @@ Posts List
 								<td class="col-sm-3">{{$value->title}}</td>
 								<td class="col-sm-2" style="text-align: center;">
 									<div style="text-align: center;">
-										<img style="width: 100%; height: 100px;" src="{{url('images/'.$value->thumbnail)}}" alt="">
+										<img style="width: 100%; height: 100px;" src="{{url('images/posts/'.$value->thumbnail)}}" alt="">
 									</div>
 								</td>
 								<td class="col-sm-2">{{$value->name}}</td>

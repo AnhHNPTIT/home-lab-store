@@ -269,26 +269,39 @@
                                                                     </ul><!-- /.menu-container -->
                                                                 </li><!-- /.menu-item-link -->
 
-                                                                <li class="menu-item-link menu-item-depth-0 dd-menu-link fa fa-address-book-o">
-                                                                    <a class="em-menu-link" href="{{ url('/ban-tin-suc-khoe') }}"> <span style="text-transform: uppercase;"> Sức khỏe cho bé</span> </a>
+                                                                <li class="menu-item-link menu-item-depth-0 hidden-sm hidden-md menu-item-parent">
+                                                                    <a class="em-menu-link" href="{{ url('/tin-tuc-su-kien') }}"> <span>Tin tức - Sự kiện</span> </a>
+                                                                    <ul class="menu-container" style="dropdown-menu">
+                                                                        <li class="menu-item-vbox menu-item-depth-1 col-menu menu_col5 grid_6 menu-item-parent" style="">
+                                                                            <ul class="menu-container">
+                                                                                <li class="menu-item-text menu-item-depth-2  col-md-24 ">
+                                                                                    <div class="em-line-01">
+                                                                                        <div>
+                                                                                            <ul class="menu-container" style="">
+                                                                                                @if(isset($categories))
+                                                                                                @foreach($categories as $value)
+                                                                                                <li class="menu-item-link menu-item-depth-1 first">
+                                                                                                    <a class="em-menu-link" href="/chuyen-muc/{{$value->slug}}">
+                                                                                                        <span>{{$value->name}}</span>
+                                                                                                    </a>
+                                                                                                </li>
+                                                                                                @endforeach
+                                                                                                @endif </ul><!-- /.menu-container -->
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </li>
+                                                                    </ul><!-- /.menu-container -->
                                                                 </li><!-- /.menu-item-link -->
 
-                                                                <li class="menu-item-link menu-item-depth-0 dd-menu-link fa fa-medkit">
-                                                                    <a class="em-menu-link" href="{{ url('/cua-hang/thuoc') }}"> <span style="text-transform: uppercase;"> Bổ sung vitamin & khoáng chất </span> </a>
+                                                                <li class="menu-item-link menu-item-depth-0  menu-item-parent">
+                                                                    <a class="em-menu-link" href="{{ url('/gioi-thieu') }}"> <span> Giới thiệu </span> </a>
                                                                 </li><!-- /.menu-item-link -->
 
-                                                                <li class="menu-item-link menu-item-depth-0 dd-menu-link fa fa-dropbox">
-                                                                    <a class="em-menu-link" href="{{ url('/cua-hang/thuc-pham-chuc-nang') }}"> <span style="text-transform: uppercase;"> Nước tăng lực & giải khát </span> </a>
+                                                                <li class="menu-item-link menu-item-depth-0  menu-item-parent">
+                                                                    <a class="em-menu-link" href="{{ url('/lien-he') }}" id="link-contact"> <span> Liên hệ </span> </a>
                                                                 </li><!-- /.menu-item-link -->
-
-                                                                <li class="menu-item-link menu-item-depth-0 dd-menu-link fa fa fa-shopping-cart">
-                                                                    <a class="em-menu-link" href="{{ url('/cua-hang/hang-tieu-dung') }}"> <span style="text-transform: uppercase;"> Giàu chất xơ tiêu hóa </span> </a>
-                                                                </li><!-- /.menu-item-link -->
-
-                                                                <li class="menu-item-link menu-item-depth-0 dd-menu-link fa fa-ambulance">
-                                                                    <a class="em-menu-link" href="{{ url('/cua-hang/thiet-bi-y-te') }}"> <span style="text-transform: uppercase;"> Chức năng đặc biệt </span> </a>
-                                                                </li><!-- /.menu-item-link -->
-
                                                             </ul>
                                                         </div>
                                                     </div><!-- /.megamenu-wrapper -->
@@ -544,7 +557,7 @@
                                                             </li><!-- /.menu-item-link -->
 
                                                             <li class="menu-item-link menu-item-depth-0 hidden-sm hidden-md menu-item-parent">
-                                                                <a class="em-menu-link" href="{{ url('/ban-tin-suc-khoe') }}"> <span>Tin tức - Sự kiện</span> </a>
+                                                                <a class="em-menu-link" href="{{ url('/tin-tuc-su-kien') }}"> <span>Tin tức - Sự kiện</span> </a>
                                                                 <ul class="menu-container" style="dropdown-menu">
                                                                     <li class="menu-item-vbox menu-item-depth-1 col-menu menu_col5 grid_6 menu-item-parent" style="">
                                                                         <ul class="menu-container">
@@ -633,11 +646,11 @@
                                                 </div>
                                                 <p style="text-align : center; color: #ffffff;">
                                                     <a href="{{ url('/') }}">
-                                                        Hộ kinh doanh <span>Công ty Cổ phần Mỹ phẩm Thiên nhiên Cỏ Mềm</span>
+                                                         <span>Công ty Cổ phần Mỹ phẩm Thiên nhiên Cỏ Mềm</span>
                                                     </a>
                                                 </p>
                                                 <p style="text-align : center; color: #ffffff;">
-                                                    Giấy phép ĐKKD số 01A8023039 cấp ngày 01 - 01 - 2023
+                                                    Giấy phép ĐKKD số 0109153702 cấp ngày 09/04/2020
                                                 </p>
                                                 <p style="text-align : center; color: #ffffff;">
                                                     Phụ trách CM : Hoàng Lan Anh

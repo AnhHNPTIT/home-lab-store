@@ -231,49 +231,7 @@
                                             </div>
                                         </div><!-- /.em-top-links -->
                                     </div><!-- /.em-wrapper-top -->
-                                    <div class="row mobile-main-menu toggle-menu">
-                                        <div class="col-sm-24">
-                                            <div class="em-top-menu">
-                                                <div class="em-menu-mobile">
-                                                    <div class="megamenu-wrapper wrapper-7_5505">
-                                                        <div class="em_nav" id="toogle_menu_7_5505">
-                                                            <ul class="hnav em_menu_mobile">
 
-                                                                <li class="menu-item-link menu-item-depth-0 dd-menu-link fa fa-list">
-                                                                    <a class="em-menu-link" href="{{url('/')}}"> <span style="text-transform: uppercase;">Trang chủ</span> </a>
-                                                                </li><!-- /.menu-item-link -->
-
-                                                                <li class="menu-item-link menu-item-depth-0 dd-menu-link fa fa-user-md">
-                                                                    <a class="em-menu-link" href="#"> <span style="text-transform: uppercase;"> Nhân viên tư vấn </span> </a>
-                                                                </li><!-- /.menu-item-link -->
-
-                                                                <li class="menu-item-link menu-item-depth-0 dd-menu-link fa fa-address-book-o">
-                                                                    <a class="em-menu-link" href="#"> <span style="text-transform: uppercase;"> Sức khỏe cho bé</span> </a>
-                                                                </li><!-- /.menu-item-link -->
-
-                                                                <li class="menu-item-link menu-item-depth-0 dd-menu-link fa fa-medkit">
-                                                                    <a class="em-menu-link" href="{{ url('/cua-hang/thuoc') }}"> <span style="text-transform: uppercase;"> Bổ sung vitamin & khoáng chất </span> </a>
-                                                                </li><!-- /.menu-item-link -->
-
-                                                                <li class="menu-item-link menu-item-depth-0 dd-menu-link fa fa-dropbox">
-                                                                    <a class="em-menu-link" href="{{ url('/cua-hang/thuc-pham-chuc-nang') }}"> <span style="text-transform: uppercase;"> Nước tăng lực & giải khát </span> </a>
-                                                                </li><!-- /.menu-item-link -->
-
-                                                                <li class="menu-item-link menu-item-depth-0 dd-menu-link fa fa fa-shopping-cart">
-                                                                    <a class="em-menu-link" href="{{ url('/cua-hang/hang-tieu-dung') }}"> <span style="text-transform: uppercase;"> Giàu chất xơ tiêu hóa </span> </a>
-                                                                </li><!-- /.menu-item-link -->
-
-                                                                <li class="menu-item-link menu-item-depth-0 dd-menu-link fa fa-ambulance">
-                                                                    <a class="em-menu-link" href="{{ url('/cua-hang/thiet-bi-y-te') }}"> <span style="text-transform: uppercase;"> Chức năng đặc biệt </span> </a>
-                                                                </li><!-- /.menu-item-link -->
-
-                                                            </ul>
-                                                        </div>
-                                                    </div><!-- /.megamenu-wrapper -->
-                                                </div>
-                                            </div><!-- /.em-top-menu -->
-                                        </div>
-                                    </div><!-- /.mobile-main-menu -->
 
                                 </div>
                             </div><!-- /.em-mheader-wrapper-menu -->
@@ -566,11 +524,11 @@
                                                 </div>
                                                 <p style="text-align : center; color: #ffffff;">
                                                     <a href="{{ url('/') }}">
-                                                        Hộ kinh doanh <span>Công ty Cổ phần Mỹ phẩm Thiên nhiên Cỏ Mềm</span>
+                                                         <span>Công ty Cổ phần Mỹ phẩm Thiên nhiên Cỏ Mềm</span>
                                                     </a>
                                                 </p>
                                                 <p style="text-align : center; color: #ffffff;">
-                                                    Giấy phép ĐKKD số 01A8023039 cấp ngày 27 - 12 - 2020
+                                                    Giấy phép ĐKKD số 0109153702 cấp ngày 27 - 12 - 2020
                                                 </p>
                                                 <p style="text-align : center; color: #ffffff;">
                                                     Phụ trách CM : Hoàng Lan Anh

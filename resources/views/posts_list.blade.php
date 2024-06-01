@@ -28,7 +28,7 @@ Tin tức - Sự kiện- Home Lab
                             <div class="em_post-item">
                                 <div class="post-title">
                                     <h1 style="margin-top : 10px; font-size: 20px; font-weight:600 !important; text-transform: capitalize !important;">
-                                        <a href="{{ url('/ban-tin-suc-khoe/'.$post->slug) }}">
+                                        <a href="{{ url('/tin-tuc-su-kien/'.$post->slug) }}">
                                             {{$post->title}}
                                         </a>
                                     </h1>
@@ -52,8 +52,8 @@ Tin tức - Sự kiện- Home Lab
 
                                 </div>
                                 <div class="post-image col-sm-8">
-                                    <a href="{{ url('/ban-tin-suc-khoe/'.$post->slug) }}">
-                                        <img class="img-responsive" alt="{{$post->title}}" src="{{asset('/images/'.$post->thumbnail)}}" />
+                                    <a href="{{ url('/tin-tuc-su-kien/'.$post->slug) }}">
+                                        <img class="img-responsive" alt="{{$post->title}}" src="{{asset('/images/posts/'.$post->thumbnail)}}" />
                                     </a>
                                 </div>
                                 <div class="post-content col-sm-15">
@@ -65,7 +65,7 @@ Tin tức - Sự kiện- Home Lab
                                         </p>
                                     </div>
                                     <div style="text-align:right;">
-                                        <a href="{{ url('/ban-tin-suc-khoe/'.$post->slug) }}">
+                                        <a href="{{ url('/tin-tuc-su-kien/'.$post->slug) }}">
                                             <p>Xem thêm</p>
                                         </a>
                                     </div>
@@ -89,10 +89,10 @@ Tin tức - Sự kiện- Home Lab
                                 <ul class="em-recent-post">
                                     @foreach($recent_posts as $post)
                                     <li class="item">
-                                        <a href="{{ url('/ban-tin-suc-khoe/'.$post->slug) }}">
-                                            <img src="{{asset('/images/'.$post->thumbnail)}}" />
+                                        <a href="{{ url('/tin-tuc-su-kien/'.$post->slug) }}">
+                                            <img src="{{asset('/images/posts/'.$post->thumbnail)}}" />
                                         </a>
-                                        <a class="post-title em-blog-title" href="{{ url('/ban-tin-suc-khoe/'.$post->slug) }}" style="text-transform: capitalize !important;">
+                                        <a class="post-title em-blog-title" href="{{ url('/tin-tuc-su-kien/'.$post->slug) }}" style="text-transform: capitalize !important;">
                                             {{$post->title}}
                                         </a>
                                         <p class="intro">

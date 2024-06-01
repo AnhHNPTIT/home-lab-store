@@ -32,8 +32,8 @@ Chi tiết sản phẩm - Home Lab
                                                 <div class="">
                                                     <p class="product-image" style="margin-top : 10px;">
 
-                                                        <a class="cloud-zoom" id="image_zoom" rel="zoomWidth: 600, position : 'inside'" href="{{asset('images/'.$product->image)}}">
-                                                            <img class="em-product-main-img" src="{{asset('images/'.$product->image)}}" style="width : 60%;" />
+                                                        <a class="cloud-zoom" id="image_zoom" rel="zoomWidth: 600, position : 'inside'" href="{{asset('images/products/'.$product->image)}}">
+                                                            <img class="em-product-main-img" src="{{asset('images/products/'.$product->image)}}" style="width : 60%;" />
                                                         </a>
                                                     </p>
                                                 </div><!-- /.media-left -->
@@ -75,14 +75,6 @@ Chi tiết sản phẩm - Home Lab
                                                     </div>
 
                                                     <div class="short-description" style="margin-top : 20px;">
-                                                        <div class="sku" style="color: #777; font-size: 16px;">
-                                                            @if(strlen($product->description) > 500)
-                                                            {!!substr($product->description, 0, 500)!!}...
-                                                            @else
-                                                            {!!$product->description!!}
-                                                            @endif
-                                                        </div>
-
                                                         @if($product->quantity > 0)
                                                         <div style="width:100px; padding : 3px 3px; background:#6df31a; color:#fff; font-weight:bold; font-size:12px; text-transform:uppercase; text-align:center;">
                                                             Còn hàng
@@ -136,47 +128,7 @@ Chi tiết sản phẩm - Home Lab
                                                     </div>
                                                     <div class="box-collateral-content" style="text-align:justify; line-height:30px;">
                                                         <div class="std">
-                                                            <strong>
-                                                                <span>1. Mô tả sản phẩm: </span>
-                                                            </strong>
                                                             <p>{!! $product->description !!}</p>
-                                                        </div>
-                                                        <div class="std">
-                                                            <strong>
-                                                                <span>2. Thành phần: </span>
-                                                            </strong>
-                                                            <p>{!! $product->active !!}</p>
-                                                        </div>
-                                                        <div class="std">
-                                                            <strong>
-                                                                <span>3. Công dụng: </span>
-                                                            </strong>
-                                                            <p>{!! $product->effect !!}</p>
-                                                        </div>
-                                                        <div class="std">
-                                                            <strong>
-                                                                <span>4. Đối tượng sử dụng: </span>
-                                                            </strong>
-                                                            <p>{!! $product->object !!}</p>
-                                                            <br />
-                                                        </div>
-                                                        <div class="std">
-                                                            <strong>
-                                                                <span>5. Cách sử dụng: </span>
-                                                            </strong>
-                                                            <p>{!! $product->frequence !!}</p>
-                                                        </div>
-                                                        <div class="std">
-                                                            <strong>
-                                                                <span>6. Quy cách đóng gói: </span>
-                                                            </strong>
-                                                            <p>{!! $product->packed !!}</p>
-                                                        </div>
-                                                        <div class="std">
-                                                            <strong>
-                                                                <span>7. Bảo quản: </span>
-                                                            </strong>
-                                                            <p>{!! $product->maintain !!}</p>
                                                         </div>
                                                     </div>
                                                 </div><!-- /.box-collateral -->
@@ -227,7 +179,7 @@ Chi tiết sản phẩm - Home Lab
                                                                                         </li>
                                                                                     </ul>
                                                                                     @endif
-                                                                                    <img class="em-img-lazy img-responsive" src="{{asset('images/'.$item->image)}}" alt="{{$item->name}}" style="width:100%; height:204px;" /> </a>
+                                                                                    <img class="em-img-lazy img-responsive" src="{{asset('images/products/'.$item->image)}}" alt="{{$item->name}}" style="width:100%; height:204px;" /> </a>
                                                                             <div class="product-details product-shop">
                                                                                 <p class="product-name">
                                                                                     <a href="/san-pham/{{$item->slug}}"> {{$item->name}} </a>
@@ -304,7 +256,7 @@ Chi tiết sản phẩm - Home Lab
                                     @foreach($suggest_products as $item)
                                     <div class="item" style="margin-top : 30px;">
                                         <a href="{{ url('/san-pham/'.$item->slug) }}">
-                                            <img class="img-responsive em-alt-org em-lazy-loaded" src="{{asset('images/'.$item->image)}}" alt="{{$item->name}}" height="110" width="110">
+                                            <img class="img-responsive em-alt-org em-lazy-loaded" src="{{asset('images/products/'.$item->image)}}" alt="{{$item->name}}" height="110" width="110">
                                         </a>
                                         <div class="product-shop">
                                             <div class="f-fix">

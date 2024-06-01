@@ -37,7 +37,7 @@ Sản phẩm yêu thích - Home Lab
                                             <tr>
                                                 <td class="col-sm-3" style="text-align : center;">
                                                     <a class="product-image" href="{{url('/san-pham/'.$wishlist->slug)}}">
-                                                        <img src="{{asset('images/'.$wishlist->image)}}" style="width : 80px; height : 100px;" alt="{{$wishlist->name}}" />
+                                                        <img src="{{asset('images/products/'.$wishlist->image)}}" style="width : 80px; height : 100px;" alt="{{$wishlist->name}}" />
                                                     </a>
                                                     @if($wishlist->quantity > 0)
                                                     <div style="background:#6df31a; color:#fff; font-weight:bold; font-size:12px; text-align:center;">
