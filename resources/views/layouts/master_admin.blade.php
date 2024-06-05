@@ -346,6 +346,19 @@
               <li><a href="/admin/post"><i class="fa fa-newspaper-o"></i> Bài viết</a></li>
             </ul>
           </li>
+
+          <li class="active treeview">
+            <a href="#">
+              <i class="fa fa-phone"></i> <span>Liên hệ</span>
+              <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+            </a>
+            <ul class="treeview-menu">
+              <li><a href="/admin/contact"> <i class="fa fa-phone"></i>Liên hệ</a></li>
+            </ul>
+          </li>
+
           @endif
 
           @if(Auth::guard('admin')->check())

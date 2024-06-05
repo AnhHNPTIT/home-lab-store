@@ -21,9 +21,10 @@ Customers List
 							<tr>
 								<th class="col-sm-1" style="text-align: center;">Tên tài khoản</th>
 								<th class="col-sm-1" style="text-align: center;">Số điện thoại</th>
+								<th class="col-sm-1" style="text-align: center;">Nhóm khách hàng</th>
 								<th class="col-sm-1" style="text-align: center;">Tổng tiền giao dịch</th>
 								<th class="col-sm-1" style="text-align: center;">Điểm tích lũy</th>
-								<th class="col-sm-1" style="text-align: center;">Tham gia</th>
+								<!-- <th class="col-sm-1" style="text-align: center;">Tham gia</th> -->
 								<th class="col-sm-1" style="text-align: center;"> Hành động</th>
 							</tr>
 						</thead>
@@ -32,12 +33,19 @@ Customers List
 							@foreach ($customers as $value)
 							<tr>
 								<td class="col-sm-1">{{$value->name}}</td>
-								<td class="col-sm-1" style="text-align: right;">{{$value->phone_number}}</td>
+								<td class="col-sm-1" style="text-align: center;">{{$value->phone_number}}</td>
+								@if ($value->money_payment_transactions > 5000)
+									<td class="col-sm-1">Khách hàng trung thành</td>
+								@elseif ($value->money_payment_transactions > 0 && $value->money_payment_transactions <= 5000)
+									<td class="col-sm-1">Khách hàng tiềm năng</td>
+								@else
+									<td class="col-sm-1">Khách hàng mới</td>
+								@endif
 								<td class="col-sm-1" style="text-align: right;">{{number_format(($value->money_payment_transactions*1000) ,0 ,'.' ,'.')}} VND</td>
 								<td class="col-sm-1" style="text-align: right;">{{$value->score_awards}}</td>
-								<td class="col-sm-1" style="text-align: right;">
+								<!-- <td class="col-sm-1" style="text-align: right;">
 									{{Carbon\Carbon::parse($value->created_at)->diffForHumans()}}
-								</td>
+								</td> -->
 								<td class="col-sm-1" style="text-align: center;">
 									@if($value->status == 0)
 									<button data-id="{{$value->id}}" type="button" title="Kích hoạt sử dụng" class="btn btn-warning btn-edit" >

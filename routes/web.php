@@ -250,7 +250,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'CheckAdmin'], function () {
 
 	// contacts
 	Route::get('/contact', [ContactController::class, 'index']);
-	Route::delete('/contact/{id}', [ContactController::class, 'destroy']);
+	Route::put('/update-status-contact/{id}', [ContactController::class, 'updateStatus']);
 });
 
 // admin
