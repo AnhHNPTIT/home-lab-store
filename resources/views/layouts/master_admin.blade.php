@@ -268,6 +268,7 @@
               <li><a href="/admin/chart"><i class="fa fa-pie-chart"></i>Biểu đồ thống kê</a></li>
               <li><a href="/admin/report_product"><i class="fa fa-star"></i>Báo cáo sản phẩm</a></li>
               <li><a href="/admin/report_transaction"><i class="fa fa-star"></i>Báo cáo giao dịch</a></li>
+              <li><a href="/admin/report_customer"><i class="fa fa-birthday-cake"></i>Sinh nhật khách hàng</a></li>
             </ul>
           </li>
           @endif

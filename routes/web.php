@@ -171,6 +171,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'CheckAdminLogin'], function 
 	Route::get('/report_product/{id}', [ProductController::class, 'reportProduct']);
 	Route::post('/report_transaction/from_date={from_date}&to_date={to_date}&status={status}', [TransactionController::class, 'reportTransaction']);
 	Route::get('/report_transaction/from_date={from_date}&to_date={to_date}&status={status}', [TransactionController::class, 'reportTransaction']);
+	Route::get('/report_customer', [UserController::class, 'reportCustomer']);
 });
 
 // admin-collaborator

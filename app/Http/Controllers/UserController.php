@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Customer;
 use App\Models\Admin;
 use Validator;
+use Carbon\Carbon;
 
 class UserController extends Controller
 {
@@ -228,5 +229,17 @@ class UserController extends Controller
             }
             return response()->json(['is' => 'unsuccess', 'uncomplete' => 'Một nhân viên chưa được cập nhật thành công']);
         }
+    }
+
+    public function reportCustomer()
+    {
+        // Lấy tháng hiện tại
+        $currentMonth = Carbon::now()->month;
+
+        // Truy vấn danh sách khách hàng có ngày sinh trong tháng hiện tại
+        $customers = Customer::whereMonth('birthday', $currentMonth)->get();
+
+        // Trả về danh sách khách hàng
+        return view('admin.report_customer', ['customers' => $customers]);
     }
 }

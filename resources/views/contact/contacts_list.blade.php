@@ -22,8 +22,8 @@ Danh sách liên hệ
 								<th class="col-sm-2" style="text-align: center;">Họ tên</th>
 								<th class="col-sm-1" style="text-align: center;">Số điện thoại</th>
 								<th class="col-sm-1" style="text-align: center;">Nội dung</th>
-								<th class="col-sm-1" style="text-align: center;">Trạng thái</th>
-								<th class="col-sm-3" style="text-align: center;">Hành động</th>
+								<th class="col-sm-3" style="text-align: center;">Trạng thái</th>
+								<th class="col-sm-1" style="text-align: center;">Hành động</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -32,20 +32,20 @@ Danh sách liên hệ
 							<tr>
 								<td class="col-sm-2">{{$value->name}}</td>
 								<td class="col-sm-1">{{$value->phone_number}}</td>
-								<td class="col-sm-1">{{$value->content}}</td>
+								<td class="col-sm-3">{{$value->content}}</td>
 								@if($value->status == 0)
 									<td class="col-sm-1">Chưa xử lý</td>
 								@else
 									<td class="col-sm-1">Đã xử lý</td>
 								@endif
-								<td class="col-sm-3" style="text-align: center;">
+								<td class="col-sm-1" style="text-align: center;">
 									@if($value->status == 0)
 									<button data-id="{{$value->id}}" type="button" title="Đã xử lý" class="btn btn-info btn-status" >
-										<i class="fa fa-unlock"></i>
+										<i class="fa fa-refresh"></i>
 									</button>
 									@else
 									<button data-id="{{$value->id}}" type="button" title="Chưa xử lý" class="btn btn-success btn-status" >
-										<i class="fa fa-stop-circle"></i>
+										<i class="fa fa-refresh"></i>
 									</button>
 									@endif
 								</td>
