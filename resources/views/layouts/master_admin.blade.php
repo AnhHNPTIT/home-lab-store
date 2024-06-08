@@ -255,8 +255,8 @@
 
           <!-- <li class="header">MAIN NAVIGATION</li> -->
 
-          @if(Auth::guard('admin')->check())
-          @if(Auth::guard('admin')->user()->level == 1)
+          
+          
           <li class="active treeview">
             <a href="#">
               <i class="fa fa-bar-chart"></i> <span>Báo cáo</span>
@@ -265,14 +265,15 @@
               </span>
             </a>
             <ul class="treeview-menu">
+              @if(Auth::guard('admin')->user()->level == 1)
               <li><a href="/admin/chart"><i class="fa fa-pie-chart"></i>Biểu đồ thống kê</a></li>
               <li><a href="/admin/report_product"><i class="fa fa-star"></i>Báo cáo sản phẩm</a></li>
               <li><a href="/admin/report_transaction"><i class="fa fa-star"></i>Báo cáo giao dịch</a></li>
+              @endif
               <li><a href="/admin/report_customer"><i class="fa fa-birthday-cake"></i>Sinh nhật khách hàng</a></li>
             </ul>
           </li>
-          @endif
-          @endif
+          
 
           @if(Auth::guard('admin')->user()->level == 2)
           <li class="active treeview">
@@ -361,9 +362,7 @@
           </li>
 
           @endif
-
-          @if(Auth::guard('admin')->check())
-          @if(Auth::guard('admin')->user()->level == 1)
+         
           <li class="active treeview">
             <a href="#">
               <i class="fa fa-sitemap"></i> <span>Quản lý người dùng</span>
@@ -373,12 +372,11 @@
             </a>
             <ul class="treeview-menu">
               <li><a href="/admin/user/customer"><i class="fa fa-user-circle"></i> Khách hàng </a></li>
+              @if(Auth::guard('admin')->user()->level == 1)
               <li><a href="/admin/user/collaborator"><i class="fa fa-user-plus"></i> Nhân viên</a></li>
+              @endif
             </ul>
           </li>
-          @endif
-          @endif
-
         </ul>
       </section>
       <!-- /.sidebar -->

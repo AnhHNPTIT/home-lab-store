@@ -139,12 +139,6 @@ Route::post('/lien-he', [CustomerContactController::class, 'postFormContact']);
 
 // admin
 Route::group(['prefix' => 'admin', 'middleware' => 'CheckAdminLogin'], function () {
-	// customer member 
-	Route::get('/user/customer', [UserController::class, 'customer']);
-	Route::put('/user/customer/{id}', [UserController::class, 'updateCustomer']);
-	Route::delete('/user/customer/{id}', [UserController::class, 'destroyCustomer']);
-	Route::get('/user/customer/{id}', [UserController::class, 'show']);
-
 	// collaborator member 
 	Route::get('/user/collaborator', [UserController::class, 'collaborator']);
 	Route::post('/user/collaborator', [UserController::class, 'store']);
@@ -171,7 +165,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'CheckAdminLogin'], function 
 	Route::get('/report_product/{id}', [ProductController::class, 'reportProduct']);
 	Route::post('/report_transaction/from_date={from_date}&to_date={to_date}&status={status}', [TransactionController::class, 'reportTransaction']);
 	Route::get('/report_transaction/from_date={from_date}&to_date={to_date}&status={status}', [TransactionController::class, 'reportTransaction']);
-	Route::get('/report_customer', [UserController::class, 'reportCustomer']);
+	
 });
 
 // admin-collaborator
@@ -252,6 +246,13 @@ Route::group(['prefix' => 'admin', 'middleware' => 'CheckAdmin'], function () {
 	// contacts
 	Route::get('/contact', [ContactController::class, 'index']);
 	Route::put('/update-status-contact/{id}', [ContactController::class, 'updateStatus']);
+
+	// customer member 
+	Route::get('/user/customer', [UserController::class, 'customer']);
+	Route::put('/user/customer/{id}', [UserController::class, 'updateCustomer']);
+	Route::delete('/user/customer/{id}', [UserController::class, 'destroyCustomer']);
+	Route::get('/user/customer/{id}', [UserController::class, 'show']);
+	Route::get('/report_customer', [UserController::class, 'reportCustomer']);
 });
 
 // admin
