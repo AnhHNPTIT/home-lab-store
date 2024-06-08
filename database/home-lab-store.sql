@@ -49,7 +49,7 @@ CREATE TABLE `admins` (
 
 LOCK TABLES `admins` WRITE;
 /*!40000 ALTER TABLE `admins` DISABLE KEYS */;
-INSERT INTO `admins` VALUES (1,'157202302220191026000342g6LFGCz0rHPe8DIkAnwD4QBmgw1UFu4LQn1JAPoK.jpeg','Giám đốc','2023-01-01',1,'19001900','Ha Noi','info.healthyfoodstore@gmail.com','$2y$10$4edleQ7FIcS8PthADtoE.uiy3SBXgEcRg0cNNLMbJKRudJkVsRMC2',NULL,1,1,'2024-10-07 14:22:00','2024-10-07 14:22:00'),(2,'157202302220191026000342g6LFGCz0rHPe8DIkAnwD4QBmgw1UFu4LQn1JAPoK.jpeg','Nhân viên kinh doanh','1997-01-08',0,'0987654321','1197 Giải Phóng','nvkinhdoanh@gmail.com','$2y$10$4edleQ7FIcS8PthADtoE.uiy3SBXgEcRg0cNNLMbJKRudJkVsRMC2',NULL,0,1,'2024-11-08 02:26:25','2024-11-08 02:26:25'),(3,'157202302220191026000342g6LFGCz0rHPe8DIkAnwD4QBmgw1UFu4LQn1JAPoK.jpeg','Nhân viên giao hàng','1997-02-04',0,'0123456789','Hà Nội','nvgiaohang@gmail.com','$2y$10$4edleQ7FIcS8PthADtoE.uiy3SBXgEcRg0cNNLMbJKRudJkVsRMC2',NULL,2,1,'2024-11-23 08:52:39','2024-11-23 08:52:39'),(4,'157202302220191026000342g6LFGCz0rHPe8DIkAnwD4QBmgw1UFu4LQn1JAPoK.jpeg','Nguyễn Thị Huệ','1997-04-15',0,'0963852741','Hà Nội','nguyenhue154@gmail.com','$2y$10$I0qnNB8CqbEqKwmwEZLDeuhE7XUzsFy41tKmIuwWLp6GV.N6Erh9a',NULL,0,1,'2024-11-24 01:13:35','2024-11-24 01:13:35'),(5,'157202302220191026000342g6LFGCz0rHPe8DIkAnwD4QBmgw1UFu4LQn1JAPoK.jpeg','Trần Thị Hằng','1994-07-01',0,'0147852369','Hà Nội','tranhang190194@gmail.com','$2y$10$Y.R.Yv.jRyWRskBXyzaiC.TXgMlj81zHFzL4I7kYcaCo3IyFewDuO',NULL,0,1,'2024-01-30 07:03:22','2024-01-30 07:03:22'),(6,'157202302220191026000342g6LFGCz0rHPe8DIkAnwD4QBmgw1UFu4LQn1JAPoK.jpeg','Nguyễn Thị Duyên','1997-04-10',0,'0159753842','Khu đô thị Đại Thanh, Thanh Trì, Hà Nội','ntduyen1004@gmail.com','$2y$10$QjX3hz0.UFQzRM2reXPYAubvSpyw6adOvAulQ9BB36jAX8pthH6Li',NULL,0,1,'2024-07-06 08:25:58','2024-07-06 08:25:58');
+INSERT INTO `admins` VALUES (1,'157202302220191026000342g6LFGCz0rHPe8DIkAnwD4QBmgw1UFu4LQn1JAPoK.jpeg','Giám đốc','2023-01-01',1,'19001900','Ha Noi','cskh.so@comem.vn','$2y$10$4edleQ7FIcS8PthADtoE.uiy3SBXgEcRg0cNNLMbJKRudJkVsRMC2',NULL,1,1,'2024-10-07 14:22:00','2024-10-07 14:22:00'),(2,'157202302220191026000342g6LFGCz0rHPe8DIkAnwD4QBmgw1UFu4LQn1JAPoK.jpeg','Nhân viên kinh doanh','1997-01-08',0,'0987654321','1197 Giải Phóng','nvkinhdoanh@gmail.com','$2y$10$4edleQ7FIcS8PthADtoE.uiy3SBXgEcRg0cNNLMbJKRudJkVsRMC2',NULL,0,1,'2024-11-08 02:26:25','2024-11-08 02:26:25'),(3,'157202302220191026000342g6LFGCz0rHPe8DIkAnwD4QBmgw1UFu4LQn1JAPoK.jpeg','Nhân viên giao hàng','1997-02-04',0,'0123456789','Hà Nội','nvgiaohang@gmail.com','$2y$10$4edleQ7FIcS8PthADtoE.uiy3SBXgEcRg0cNNLMbJKRudJkVsRMC2',NULL,2,1,'2024-11-23 08:52:39','2024-11-23 08:52:39'),(4,'157202302220191026000342g6LFGCz0rHPe8DIkAnwD4QBmgw1UFu4LQn1JAPoK.jpeg','Nguyễn Thị Huệ','1997-04-15',0,'0963852741','Hà Nội','nguyenhue154@gmail.com','$2y$10$I0qnNB8CqbEqKwmwEZLDeuhE7XUzsFy41tKmIuwWLp6GV.N6Erh9a',NULL,0,1,'2024-11-24 01:13:35','2024-11-24 01:13:35'),(5,'157202302220191026000342g6LFGCz0rHPe8DIkAnwD4QBmgw1UFu4LQn1JAPoK.jpeg','Trần Thị Hằng','1994-07-01',0,'0147852369','Hà Nội','tranhang190194@gmail.com','$2y$10$Y.R.Yv.jRyWRskBXyzaiC.TXgMlj81zHFzL4I7kYcaCo3IyFewDuO',NULL,0,1,'2024-01-30 07:03:22','2024-01-30 07:03:22'),(6,'157202302220191026000342g6LFGCz0rHPe8DIkAnwD4QBmgw1UFu4LQn1JAPoK.jpeg','Nguyễn Thị Duyên','1997-04-10',0,'0159753842','Khu đô thị Đại Thanh, Thanh Trì, Hà Nội','ntduyen1004@gmail.com','$2y$10$QjX3hz0.UFQzRM2reXPYAubvSpyw6adOvAulQ9BB36jAX8pthH6Li',NULL,0,1,'2024-07-06 08:25:58','2024-07-06 08:25:58');
 /*!40000 ALTER TABLE `admins` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -65,10 +65,11 @@ CREATE TABLE `contacts` (
   `name` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci NOT NULL,
   `phone_number` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
   `content` longtext CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci NOT NULL,
+  `status` int NOT NULL DEFAULT '0',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -77,6 +78,7 @@ CREATE TABLE `contacts` (
 
 LOCK TABLES `contacts` WRITE;
 /*!40000 ALTER TABLE `contacts` DISABLE KEYS */;
+INSERT INTO `contacts` VALUES (2,'Kiểm Thử','0987654321','Kiểm Thử',1,'2024-06-05 16:49:14','2024-06-08 03:32:18');
 /*!40000 ALTER TABLE `contacts` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -103,7 +105,7 @@ CREATE TABLE `customers` (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`,`phone_number`),
   UNIQUE KEY `customers_phone_number_unique` (`phone_number`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -112,6 +114,7 @@ CREATE TABLE `customers` (
 
 LOCK TABLES `customers` WRITE;
 /*!40000 ALTER TABLE `customers` DISABLE KEYS */;
+INSERT INTO `customers` VALUES (1,'Kiểm Thử','1990-06-30',0,'0987654321','HN','$2y$10$rZnIxSL6AtNVMiDOaSpv7O8nlumeSRq8FJbJWb61/WMvMVIDK6kP6',5000.00,6000.00,'P0AYt8vBlF5ONTjCw49xJAcd1iizBWYpnxVROPNyXJwKrT8cq1CcCrcyUXGd',1,'2024-06-05 16:31:10','2024-06-05 16:31:10');
 /*!40000 ALTER TABLE `customers` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -494,4 +497,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-06-01 18:19:43
+-- Dump completed on 2024-06-08 11:31:43
