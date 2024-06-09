@@ -1,21 +1,87 @@
 @extends('layouts.master_admin') 
 
 @section('controll')
-Customers List
+Danh sách khách hàng
 @endsection
 
 @section('content')
 <!-- Main content -->
 <section class="content">
+	@csrf
 	<div class="row">
 		<div class="col-xs-12">
 			<div class="box">
 				<div class="box-header">
-					<h3 class="box-title">Danh sách khách hàng </h3>
+					<h3 class="box-title">Danh sách khách hàng</h3>
 				</div>
 				<!-- /.box-header -->
 				<div class="box-body">
-					@csrf
+					<div style="margin-bottom: 30px;">
+						@if(isset($parameter))
+						@if($parameter == 'new_customer')
+							<div class="col-xs-3">
+								<input type="radio" id="new_customer" name="customer" value="new_customer" checked = "checked">
+								<label for="new_customer">Khách hàng mới</label><br>
+							</div>
+							<div class="col-xs-3">
+								<input type="radio" id="potential_customer" name="customer" value="potential_customer">
+								<label for="potential_customer">Khách hàng tiềm năng</label><br>
+							</div>
+							<div class="col-xs-3">
+								<input type="radio" id="loyal_customer" name="customer" value="loyal_customer">
+								<label for="loyal_customer">Khách hàng trung thành</label>
+							</div>
+						@elseif($parameter == 'potential_customer')
+							<div class="col-xs-3">
+								<input type="radio" id="new_customer" name="customer" value="new_customer">
+								<label for="new_customer">Khách hàng mới</label><br>
+							</div>
+							<div class="col-xs-3">
+								<input type="radio" id="potential_customer" name="customer" value="potential_customer" checked = "checked">
+								<label for="potential_customer">Khách hàng tiềm năng</label><br>
+							</div>
+							<div class="col-xs-3">
+								<input type="radio" id="loyal_customer" name="customer" value="loyal_customer">
+								<label for="loyal_customer">Khách hàng trung thành</label>
+							</div>
+						@elseif($parameter == 'loyal_customer')
+							<div class="col-xs-3">
+								<input type="radio" id="new_customer" name="customer" value="new_customer">
+								<label for="new_customer">Khách hàng mới</label><br>
+							</div>
+							<div class="col-xs-3">
+								<input type="radio" id="potential_customer" name="customer" value="potential_customer">
+								<label for="potential_customer">Khách hàng tiềm năng</label><br>
+							</div>
+							<div class="col-xs-3">
+								<input type="radio" id="loyal_customer" name="customer" value="loyal_customer" checked = "checked">
+								<label for="loyal_customer">Khách hàng trung thành</label>
+							</div>
+						@endif
+							<div class="col-xs-3">
+								<button type="button" class="btn btn-info btn-search" >Tìm kiếm</button>
+							</div>
+						@else
+							<div class="col-xs-3">
+								<input type="radio" id="new_customer" name="customer" value="new_customer">
+								<label for="new_customer">Khách hàng mới</label><br>
+							</div>
+							<div class="col-xs-3">
+								<input type="radio" id="potential_customer" name="customer" value="potential_customer">
+								<label for="potential_customer">Khách hàng tiềm năng</label><br>
+							</div>
+							<div class="col-xs-3">
+								<input type="radio" id="loyal_customer" name="customer" value="loyal_customer">
+								<label for="loyal_customer">Khách hàng trung thành</label>
+							</div>
+							<div class="col-xs-3">
+								<button type="button" class="btn btn-info btn-search" >Tìm kiếm</button>
+							</div>
+						@endif
+
+
+					</div>
+					<br>
 					<table id="list-customers" class="table table-bordered table-striped" style="margin-top : 10px;">
 						<thead>
 							<tr>
@@ -56,17 +122,11 @@ Customers List
 										<i class="fa fa-stop-circle"></i>
 									</button>
 									@endif
-
-									<!-- <button data-id="{{$value->id}}" type="button" title="Xóa" class="btn btn-danger btn-delete">
-										<i class="fa fa-user-times"></i>
-									</button> -->
 								</td>
 							</tr>
 							@endforeach
 						</tbody>
 					</table>
-
-					{{-- {{$customers->links()}} --}}
 				</div>
 				<!-- /.box-body -->
 			</div>
@@ -76,98 +136,37 @@ Customers List
 	</div>
 	<!-- /.row -->
 
-	<script>
-		$(document).ready(function() {
-			$('#list-customers').DataTable( {
-				"lengthMenu": [[25, 50, 100, 500, 1000, 5000, -1], [25, 50, 100, 500, 1000, 5000, "All"]]
-			} );
-		} );
-	</script>
-	
+    <script>
+    	$(document).ready(function() {
+    		$('#list-customers').DataTable( {
+    			"lengthMenu": [[15, 25, -1], [15, 25, "All"]],
+				"ordering": false
+    		} );
+    	} );
+    </script>
+
 	<script type="text/javascript">
-		// block or unblock
-		$('.btn-edit').click(function(){
-			var id = $(this).attr('data-id');
+		// search
+		$('.btn-search').click(function(){
+			var $radio = $('input[name=customer]:checked');
+			var customer = $radio.val();
+			var id = $radio.attr('id');
 			$.ajax({
-				type: 'put',
-				url: '/admin/user/customer/' + id,
+				type: 'post',
+				url: '/admin/list_customers/' + id,
 				data:{
 					_token :$('[name="_token"]').val(),
 					id : id,
 				},
 				success: function(response){
-					if (response.is === 'success') {
-						swal({
-							title: "Hoàn thành!",
-							text: response.complete,
-							icon: "success",
-							buttons: true,
-							buttons: ["Ok"],
-							timer: 1000
-						});
-
-						setTimeout(function() {
-							window.location.href = "/admin/user/customer/";
-						}, 1000);
-					}
-					if (response.is === 'unsuccess') {
-						swal({
-							title: "Thất bại!",
-							text: response.uncomplete,
-							icon: "error",
-							buttons: true,
-							buttons: ["Ok"],
-							timer: 5000
-						});
-					}
+					setTimeout(function() {
+						window.location.href = "/admin/list_customers/" + id;
+					}, 1000);
 				}
 			});
-		});
-
-		// delete
-		$('.btn-delete').click(function(){
-			if(confirm('Bạn có muốn xóa không?')){
-				var _this = $(this);
-				var id = $(this).attr('data-id');
-				$.ajax({
-					type: 'delete',
-					url: '/admin/user/customer/' + id,
-					data:{
-						_token : $('[name="_token"]').val(),
-					},
-					success: function(response){
-						_this.parent().parent().remove();
-						if (response.is === 'success') {
-							_this.parent().parent().remove();
-							swal({
-								title: "Hoàn thành!",
-								text: response.complete,
-								icon: "success",
-								buttons: true,
-								buttons: ["Ok"],
-								timer: 1000
-							});
-
-							setTimeout(function() {
-								window.location.href = "/admin/user/customer/";
-							}, 1000);
-						}
-						if (response.is === 'unsuccess') {
-							swal({
-								title: "Thất bại!",
-								text: response.uncomplete,
-								icon: "error",
-								buttons: true,
-								buttons: ["Ok"],
-								timer: 5000
-							});
-						}
-					}
-				})
-			}
 		});
 	</script>
 	<script type="text/javascript" src="{{asset('home/js/sweetalert.min.js')}}"></script>
 </section>
-
+<!-- /.content -->
 @endsection

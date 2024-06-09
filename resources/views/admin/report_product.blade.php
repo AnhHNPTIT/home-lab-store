@@ -63,7 +63,7 @@ Products List
 							</div>
 						@else
 							<div class="col-xs-3">
-								<input type="radio" id="max_view" name="product" value="max_view" checked = "checked">
+								<input type="radio" id="max_view" name="product" value="max_view">
 								<label for="max_view">Sản phẩm quan tâm nhiều</label><br>
 							</div>
 							<div class="col-xs-3">

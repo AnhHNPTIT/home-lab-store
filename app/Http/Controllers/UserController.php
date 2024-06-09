@@ -242,4 +242,29 @@ class UserController extends Controller
         // Trả về danh sách khách hàng
         return view('admin.report_customer', ['customers' => $customers]);
     }
+
+    public function filterCustomer(Request $request){
+        $parameter = $request->id;
+        $customers = Customer::query();
+    
+        switch ($parameter) {
+            case 'new_customer':
+                $customers->where('money_payment_transactions', '=', 0);
+                break;
+            case 'potential_customer':
+                $customers->where('money_payment_transactions', '>', 0)
+                          ->where('money_payment_transactions', '<=', 5000);
+                break;
+            case 'loyal_customer':
+                $customers->where('money_payment_transactions', '>', 5000);
+                break;
+            default:
+                // Handle default case if needed
+                break;
+        }
+    
+        $customers = $customers->get();
+    
+        return view('user.customers_list', ['parameter' => $parameter, 'customers' => $customers]);
+    }
 }
