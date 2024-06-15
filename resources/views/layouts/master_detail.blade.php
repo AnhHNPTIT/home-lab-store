@@ -453,9 +453,31 @@
                                                                 <a class="em-menu-link" href="{{url('/')}}" id="link-home"> <span>Trang chủ</span> </a>
                                                             </li><!-- /.menu-item-link -->
 
-                                                            <li class="menu-item-link menu-item-depth-0  menu-item-parent">
-                                                                <a class="em-menu-link" href="#"> <span>Nhân viên tư vấn</span> </a>
-                                                            </li><!-- /.menu-item-link -->
+                                                            <li class="menu-item-link menu-item-depth-0 hidden-sm hidden-md menu-item-parent">
+                                                                    <a class="em-menu-link" href="#"> <span> Danh mục sản phẩm </span> </a>
+                                                                    <ul class="menu-container" style="dropdown-menu">
+                                                                        <li class="menu-item-vbox menu-item-depth-1 col-menu menu_col5 grid_6 menu-item-parent" style="">
+                                                                            <ul class="menu-container">
+                                                                                <li class="menu-item-text menu-item-depth-2  col-md-24 ">
+                                                                                    <div class="em-line-01">
+                                                                                        <div>
+                                                                                            <ul class="menu-container" style="">
+                                                                                                @if(isset($product_categories))
+                                                                                                    @foreach($product_categories as $value)
+                                                                                                        <li class="menu-item-link menu-item-depth-1 first"> 
+                                                                                                            <a class="em-menu-link" href="/danh-muc/{{$value->slug}}">
+                                                                                                                <span>{{$value->name}}</span>
+                                                                                                            </a>
+                                                                                                        </li>   
+                                                                                                    @endforeach 
+                                                                                                @endif                                                                                        </ul><!-- /.menu-container -->
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </li>
+                                                                    </ul><!-- /.menu-container -->
+                                                                </li><!-- /.menu-item-link -->
 
                                                             <li class="menu-item-link menu-item-depth-0 hidden-sm hidden-md menu-item-parent">
                                                                 <a class="em-menu-link" href="#"> <span>Tin tức - Sự kiện</span> </a>

@@ -466,14 +466,14 @@ Home Lab
                 @if(isset($new_posts))
                 @foreach($new_posts as $post)
                 <div class="item" style="margin-top : 30px; padding: 0px 10px;">
-                    <a href="{{ url('/suc-khoe/'.$post->slug) }}">
+                    <a href="{{ url('/tin-tuc-su-kien/'.$post->slug) }}">
                         <img class="img-responsive em-alt-org em-lazy-loaded" src="{{asset('/images/posts/'.$post->thumbnail)}}" alt="{{$post->name}}" style="height:160px; width:100%;">
                     </a>
                     <div>
                         <div style="padding: 5px 8px; text-align:center;">
                             <!--post title-->
                             <h1 style="margin-top : 10px; font-size: 17px; font-weight:600 !important; text-transform: capitalize !important;">
-                                <a href="{{ url('/suc-khoe/'.$post->slug) }}" title="" style="text-align: justify !important;">
+                                <a href="{{ url('/tin-tuc-su-kien/'.$post->slug) }}" title="" style="text-align: justify !important;">
                                     {{$post->title}}
                                 </a>
                             </h1>
