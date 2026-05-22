@@ -615,10 +615,37 @@ CREATE TABLE `transactions` (
   `notes` longtext DEFAULT NULL,
   `amount` double(8,2) NOT NULL,
   `score_awards` double(8,2) NOT NULL DEFAULT 0.00,
+  `payment_method` varchar(20) NOT NULL DEFAULT 'cod' COMMENT 'cod | vnpay',
+  `payment_status` varchar(20) NOT NULL DEFAULT 'pending' COMMENT 'pending | paid | failed | cancelled',
+  `vnpay_txn_ref` varchar(100) DEFAULT NULL,
+  `vnpay_transaction_no` varchar(100) DEFAULT NULL,
+  `paid_at` timestamp NULL DEFAULT NULL,
   `admin_id_status_shipped` int(10) UNSIGNED DEFAULT NULL,
   `admin_id_status_delivered` int(10) UNSIGNED DEFAULT NULL,
   `admin_id_status_cancel` int(10) UNSIGNED DEFAULT NULL,
-  `status` int(11) NOT NULL DEFAULT 0,
+  `status` int(11) NOT NULL DEFAULT 0 COMMENT '0=pending, 1=shipped, 2=delivered, 3=cancelled',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `payment_logs`
+--
+
+CREATE TABLE `payment_logs` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `transaction_id` bigint(20) UNSIGNED NOT NULL,
+  `order_id` varchar(255) NOT NULL,
+  `gateway` varchar(50) NOT NULL DEFAULT 'vnpay',
+  `vnp_txn_ref` varchar(100) DEFAULT NULL,
+  `vnp_transaction_no` varchar(100) DEFAULT NULL,
+  `amount` bigint(20) NOT NULL DEFAULT 0,
+  `response_code` varchar(10) DEFAULT NULL,
+  `bank_code` varchar(50) DEFAULT NULL,
+  `raw_response` longtext DEFAULT NULL,
+  `status` varchar(20) NOT NULL DEFAULT 'pending',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -627,29 +654,29 @@ CREATE TABLE `transactions` (
 -- Dumping data for table `transactions`
 --
 
-INSERT INTO `transactions` (`id`, `order_id`, `customer_id`, `name`, `phone_number`, `address`, `customer_notes`, `notes`, `amount`, `score_awards`, `admin_id_status_shipped`, `admin_id_status_delivered`, `admin_id_status_cancel`, `status`, `created_at`, `updated_at`) VALUES
-(1, 'ORD2024060310404287Z', 1, 'Lan Anh Hoàng', '0383053095', 'Thanh Xuân Hà Nội', NULL, NULL, 425.00, 0.00, 1, 1, NULL, 2, '2024-06-03 03:40:48', '2024-06-03 03:41:28'),
-(2, 'ORD20240603104641Y6A', 2, 'Tien Le', '0987654321', '20 TRiều Khúc', NULL, NULL, 325.00, 0.00, 1, 1, NULL, 2, '2024-06-03 03:47:01', '2024-06-08 18:37:00'),
-(3, 'ORD20240603104900LUY', 3, 'Lê Hiền', '0987543672', '20 Xuân Thủy HN', NULL, NULL, 1050.00, 0.00, 1, 1, NULL, 2, '2024-06-03 03:49:09', '2024-06-03 03:55:59'),
-(4, 'ORD20240603105343FHK', 4, 'Alex Sanda', '0398629809', 'HN', 'Chuyển khoản', NULL, 125.00, 0.00, 1, 1, NULL, 2, '2024-06-03 03:54:04', '2024-06-03 03:55:57'),
-(5, 'ORD20240603105722LQA', 5, 'Elizabeth', '08263483090', 'Ha Noi', NULL, 'khách bom hàng nhiều lần', 88.00, 0.00, NULL, NULL, 1, 3, '2024-06-03 03:57:31', '2024-06-03 04:02:32'),
-(6, 'ORD20240603105939W8Z', 6, 'Nga', '09387473836', 'HaNoi', NULL, NULL, 425.00, 0.00, 1, 1, NULL, 2, '2024-06-03 03:59:45', '2024-06-08 18:36:59'),
-(7, 'ORD20240603110419ZBJ', 6, 'Nga', '09387473836', 'HaNoi', NULL, NULL, 640.00, 0.00, 1, 1, NULL, 2, '2024-06-03 04:04:34', '2024-06-08 18:36:57'),
-(8, 'ORD20240603141907WMX', 6, 'Nga', '09387473836', 'HaNoi', NULL, NULL, 520.00, 0.00, 1, 1, NULL, 2, '2024-06-03 07:19:12', '2024-06-08 18:36:41'),
-(9, 'ORD20240603144442QAU', 7, 'Peter UK', '03456789765', 'HCM', NULL, NULL, 298.00, 0.00, 1, 1, NULL, 2, '2024-06-03 07:44:44', '2024-06-08 18:36:56'),
-(10, 'ORD20240603190756ZPJ', 8, 'Bảo Hoàng', '0373284375', 'Tây Hồ', NULL, NULL, 1430.00, 0.00, 1, 1, NULL, 2, '2024-06-03 12:07:59', '2024-06-08 18:36:55'),
-(11, 'ORD20240603190817COL', 8, 'Bảo Hoàng', '0373284375', 'Tây Hồ', NULL, NULL, 325.00, 0.00, 1, 1, NULL, 2, '2024-06-03 12:08:19', '2024-06-08 18:36:54'),
-(12, 'ORD20240603191056RPR', 9, 'Lê Thị Thủy', '09345843957', 'Cầu Giấy, Hà Nội', NULL, NULL, 160.00, 0.00, 2, 1, NULL, 2, '2024-06-03 12:10:57', '2024-06-08 18:36:53'),
-(13, 'ORD20240603191114OFL', 9, 'Lê Thị Thủy', '09345843957', 'Cầu Giấy, Hà Nội', NULL, NULL, 125.00, 0.00, 1, 1, NULL, 2, '2024-06-03 12:11:16', '2024-06-08 18:36:51'),
-(14, 'ORD20240607133241TH9', 9, 'Lê Thị Thủy', '09345843957', 'Cầu Giấy, Hà Nội', NULL, NULL, 400.00, 0.00, 1, 1, NULL, 2, '2024-06-07 06:32:46', '2024-06-08 18:36:50'),
-(15, 'ORD202406071437268MR', 9, 'Lê Thị Thủy', '09345843957', 'Cầu Giấy, Hà Nội', NULL, NULL, 338.00, 0.00, 1, 1, NULL, 2, '2024-06-07 07:37:30', '2024-06-08 18:36:49'),
-(16, 'ORD20240607145242ZCE', 9, 'Lê Thị Thủy', '09345843957', 'Cầu Giấy, Hà Nội', NULL, NULL, 210.00, 0.00, 1, 1, NULL, 2, '2024-06-07 07:52:48', '2024-06-08 18:36:47'),
-(17, 'ORD202406090132467EQ', 1, 'Lan Anh Hoàng', '0383053095', 'Thanh Xuân Hà Nội', NULL, NULL, 1463.00, 0.00, 1, 1, NULL, 2, '2024-06-08 18:32:48', '2024-06-08 18:34:18'),
-(18, 'ORD20240609013343TJH', 1, 'Lan Anh Hoàng', '0383053095', 'Thanh Xuân Hà Nội', NULL, NULL, 5819.00, 0.00, 1, 1, NULL, 2, '2024-06-08 18:33:46', '2024-06-08 18:34:16'),
-(19, 'ORD20240610001338ITR', 10, 'Son Tung', '0378349823', 'Triều Khúc, HN', 'cho t 5 màu son khác nhau', NULL, 800.00, 0.00, 1, NULL, NULL, 1, '2024-06-09 17:13:51', '2024-06-09 17:34:44'),
-(20, 'ORD20240610003419WVI', 12, 'Min', '0834954938', 'Cầu Giấy, Hà Nội', 'hehe', NULL, 320.00, 0.00, 1, NULL, NULL, 1, '2024-06-09 17:34:24', '2024-06-09 17:34:42'),
-(21, 'ORD202406100036374ZZ', 13, 'Thảo', '038272638', 'Hà Đông', NULL, NULL, 160.00, 0.00, NULL, NULL, NULL, 0, '2024-06-09 17:36:40', '2024-06-09 17:36:40'),
-(22, 'ORD20240610004101JQV', 16, 'Trang', '034893490', 'Hà Nội', NULL, NULL, 975.00, 0.00, NULL, NULL, NULL, 0, '2024-06-09 17:41:04', '2024-06-09 17:41:04');
+INSERT INTO `transactions` (`id`, `order_id`, `customer_id`, `name`, `phone_number`, `address`, `customer_notes`, `notes`, `amount`, `score_awards`, `payment_method`, `payment_status`, `vnpay_txn_ref`, `vnpay_transaction_no`, `paid_at`, `admin_id_status_shipped`, `admin_id_status_delivered`, `admin_id_status_cancel`, `status`, `created_at`, `updated_at`) VALUES
+(1, 'ORD2024060310404287Z', 1, 'Lan Anh Hoàng', '0383053095', 'Thanh Xuân Hà Nội', NULL, NULL, 425.00, 0.00, 'cod', 'pending', NULL, NULL, NULL, 1, 1, NULL, 2, '2024-06-03 03:40:48', '2024-06-03 03:41:28'),
+(2, 'ORD20240603104641Y6A', 2, 'Tien Le', '0987654321', '20 TRiều Khúc', NULL, NULL, 325.00, 0.00, 'cod', 'pending', NULL, NULL, NULL, 1, 1, NULL, 2, '2024-06-03 03:47:01', '2024-06-08 18:37:00'),
+(3, 'ORD20240603104900LUY', 3, 'Lê Hiền', '0987543672', '20 Xuân Thủy HN', NULL, NULL, 1050.00, 0.00, 'cod', 'pending', NULL, NULL, NULL, 1, 1, NULL, 2, '2024-06-03 03:49:09', '2024-06-03 03:55:59'),
+(4, 'ORD20240603105343FHK', 4, 'Alex Sanda', '0398629809', 'HN', 'Chuyển khoản', NULL, 125.00, 0.00, 'cod', 'pending', NULL, NULL, NULL, 1, 1, NULL, 2, '2024-06-03 03:54:04', '2024-06-03 03:55:57'),
+(5, 'ORD20240603105722LQA', 5, 'Elizabeth', '08263483090', 'Ha Noi', NULL, 'khách bom hàng nhiều lần', 88.00, 0.00, 'cod', 'pending', NULL, NULL, NULL, NULL, NULL, 1, 3, '2024-06-03 03:57:31', '2024-06-03 04:02:32'),
+(6, 'ORD20240603105939W8Z', 6, 'Nga', '09387473836', 'HaNoi', NULL, NULL, 425.00, 0.00, 'cod', 'pending', NULL, NULL, NULL, 1, 1, NULL, 2, '2024-06-03 03:59:45', '2024-06-08 18:36:59'),
+(7, 'ORD20240603110419ZBJ', 6, 'Nga', '09387473836', 'HaNoi', NULL, NULL, 640.00, 0.00, 'cod', 'pending', NULL, NULL, NULL, 1, 1, NULL, 2, '2024-06-03 04:04:34', '2024-06-08 18:36:57'),
+(8, 'ORD20240603141907WMX', 6, 'Nga', '09387473836', 'HaNoi', NULL, NULL, 520.00, 0.00, 'cod', 'pending', NULL, NULL, NULL, 1, 1, NULL, 2, '2024-06-03 07:19:12', '2024-06-08 18:36:41'),
+(9, 'ORD20240603144442QAU', 7, 'Peter UK', '03456789765', 'HCM', NULL, NULL, 298.00, 0.00, 'cod', 'pending', NULL, NULL, NULL, 1, 1, NULL, 2, '2024-06-03 07:44:44', '2024-06-08 18:36:56'),
+(10, 'ORD20240603190756ZPJ', 8, 'Bảo Hoàng', '0373284375', 'Tây Hồ', NULL, NULL, 1430.00, 0.00, 'cod', 'pending', NULL, NULL, NULL, 1, 1, NULL, 2, '2024-06-03 12:07:59', '2024-06-08 18:36:55'),
+(11, 'ORD20240603190817COL', 8, 'Bảo Hoàng', '0373284375', 'Tây Hồ', NULL, NULL, 325.00, 0.00, 'cod', 'pending', NULL, NULL, NULL, 1, 1, NULL, 2, '2024-06-03 12:08:19', '2024-06-08 18:36:54'),
+(12, 'ORD20240603191056RPR', 9, 'Lê Thị Thủy', '09345843957', 'Cầu Giấy, Hà Nội', NULL, NULL, 160.00, 0.00, 'cod', 'pending', NULL, NULL, NULL, 2, 1, NULL, 2, '2024-06-03 12:10:57', '2024-06-08 18:36:53'),
+(13, 'ORD20240603191114OFL', 9, 'Lê Thị Thủy', '09345843957', 'Cầu Giấy, Hà Nội', NULL, NULL, 125.00, 0.00, 'cod', 'pending', NULL, NULL, NULL, 1, 1, NULL, 2, '2024-06-03 12:11:16', '2024-06-08 18:36:51'),
+(14, 'ORD20240607133241TH9', 9, 'Lê Thị Thủy', '09345843957', 'Cầu Giấy, Hà Nội', NULL, NULL, 400.00, 0.00, 'cod', 'pending', NULL, NULL, NULL, 1, 1, NULL, 2, '2024-06-07 06:32:46', '2024-06-08 18:36:50'),
+(15, 'ORD202406071437268MR', 9, 'Lê Thị Thủy', '09345843957', 'Cầu Giấy, Hà Nội', NULL, NULL, 338.00, 0.00, 'cod', 'pending', NULL, NULL, NULL, 1, 1, NULL, 2, '2024-06-07 07:37:30', '2024-06-08 18:36:49'),
+(16, 'ORD20240607145242ZCE', 9, 'Lê Thị Thủy', '09345843957', 'Cầu Giấy, Hà Nội', NULL, NULL, 210.00, 0.00, 'cod', 'pending', NULL, NULL, NULL, 1, 1, NULL, 2, '2024-06-07 07:52:48', '2024-06-08 18:36:47'),
+(17, 'ORD202406090132467EQ', 1, 'Lan Anh Hoàng', '0383053095', 'Thanh Xuân Hà Nội', NULL, NULL, 1463.00, 0.00, 'cod', 'pending', NULL, NULL, NULL, 1, 1, NULL, 2, '2024-06-08 18:32:48', '2024-06-08 18:34:18'),
+(18, 'ORD20240609013343TJH', 1, 'Lan Anh Hoàng', '0383053095', 'Thanh Xuân Hà Nội', NULL, NULL, 5819.00, 0.00, 'cod', 'pending', NULL, NULL, NULL, 1, 1, NULL, 2, '2024-06-08 18:33:46', '2024-06-08 18:34:16'),
+(19, 'ORD20240610001338ITR', 10, 'Son Tung', '0378349823', 'Triều Khúc, HN', 'cho t 5 màu son khác nhau', NULL, 800.00, 0.00, 'cod', 'pending', NULL, NULL, NULL, 1, NULL, NULL, 1, '2024-06-09 17:13:51', '2024-06-09 17:34:44'),
+(20, 'ORD20240610003419WVI', 12, 'Min', '0834954938', 'Cầu Giấy, Hà Nội', 'hehe', NULL, 320.00, 0.00, 'cod', 'pending', NULL, NULL, NULL, 1, NULL, NULL, 1, '2024-06-09 17:34:24', '2024-06-09 17:34:42'),
+(21, 'ORD202406100036374ZZ', 13, 'Thảo', '038272638', 'Hà Đông', NULL, NULL, 160.00, 0.00, 'cod', 'pending', NULL, NULL, NULL, NULL, NULL, NULL, 0, '2024-06-09 17:36:40', '2024-06-09 17:36:40'),
+(22, 'ORD20240610004101JQV', 16, 'Trang', '034893490', 'Hà Nội', NULL, NULL, 975.00, 0.00, 'cod', 'pending', NULL, NULL, NULL, NULL, NULL, NULL, 0, '2024-06-09 17:41:04', '2024-06-09 17:41:04');
 
 -- --------------------------------------------------------
 
@@ -848,9 +875,19 @@ ALTER TABLE `transactions`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `order_id_unique` (`order_id`),
   ADD KEY `customer_id` (`customer_id`),
+  ADD KEY `transactions_payment_method_index` (`payment_method`),
+  ADD KEY `transactions_payment_status_index` (`payment_status`),
   ADD KEY `admin_id_status_shipped` (`admin_id_status_shipped`),
   ADD KEY `admin_id_status_delivered` (`admin_id_status_delivered`),
   ADD KEY `admin_id_status_cancel` (`admin_id_status_cancel`);
+
+--
+-- Indexes for table `payment_logs`
+--
+ALTER TABLE `payment_logs`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `payment_logs_transaction_id` (`transaction_id`),
+  ADD KEY `payment_logs_order_id` (`order_id`);
 
 --
 -- Indexes for table `units`
@@ -943,6 +980,12 @@ ALTER TABLE `transactions`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
+-- AUTO_INCREMENT for table `payment_logs`
+--
+ALTER TABLE `payment_logs`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `units`
 --
 ALTER TABLE `units`
@@ -996,6 +1039,12 @@ ALTER TABLE `transactions`
   ADD CONSTRAINT `transactions_ibfk_4` FOREIGN KEY (`admin_id_status_delivered`) REFERENCES `admins` (`id`),
   ADD CONSTRAINT `transactions_ibfk_5` FOREIGN KEY (`admin_id_status_cancel`) REFERENCES `admins` (`id`),
   ADD CONSTRAINT `transactions_ibfk_6` FOREIGN KEY (`order_id`) REFERENCES `orders` (`order_id`);
+
+--
+-- Constraints for table `payment_logs`
+--
+ALTER TABLE `payment_logs`
+  ADD CONSTRAINT `payment_logs_transaction_id_foreign` FOREIGN KEY (`transaction_id`) REFERENCES `transactions` (`id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `wishlists`

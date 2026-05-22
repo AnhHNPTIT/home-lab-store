@@ -27,7 +27,7 @@ class TransactionHistoryController extends Controller
             $order = Transaction::where('order_id', $order_id)->where('customer_id', $customer_id)->first();
             if ($order) {
                 $order_detail = Order::where('order_id', $order_id)->where('status', 1)->paginate(5);
-                return view('my_orders', compact('order_detail'));
+                return view('my_orders', compact('order_detail', 'order'));
             }
         }
         return view('404');

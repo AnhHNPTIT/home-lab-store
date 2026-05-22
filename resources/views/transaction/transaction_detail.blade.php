@@ -57,6 +57,12 @@ Transaction Detail
             <div class="col-sm-4 invoice-col">
               <br>
               <b>Mã đơn hàng:</b> @if(isset($transaction)) {{$transaction->order_id}} @endif<br>
+              @if(isset($transaction))
+              <b>Hình thức thanh toán:</b> {{ \App\Support\PaymentMethod::labelLong($transaction->payment_method ?? 'cod') }}<br>
+              @if(($transaction->payment_method ?? 'cod') === 'vnpay')
+              <b>Trạng thái thanh toán:</b> {{ \App\Support\PaymentMethod::paymentStatusLabel($transaction->payment_status) }}<br>
+              @endif
+              @endif
             </div>
             <!-- /.col -->
           </div>

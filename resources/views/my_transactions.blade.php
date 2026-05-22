@@ -31,11 +31,14 @@ Lịch sử đặt hàng - Home Lab
                                                 <td class="col-sm-3" style="text-align : center;">
                                                     Tổng tiền
                                                 </td>
-                                                <td class="col-sm-4" style="text-align : center;">
+                                                <td class="col-sm-3" style="text-align : center;">
+                                                    Hình thức TT
+                                                </td>
+                                                <td class="col-sm-3" style="text-align : center;">
                                                     Thanh toán điểm
                                                 </td>
-                                                <td class="col-sm-5" style="text-align : center;">
-                                                    Thanh toán tiền mặt
+                                                <td class="col-sm-3" style="text-align : center;">
+                                                    Số tiền còn lại
                                                 </td>
                                                 <td class="col-sm-3" style="text-align : center;">
                                                     Trạng thái
@@ -59,7 +62,11 @@ Lịch sử đặt hàng - Home Lab
                                                     {{number_format($transaction->amount*1000 ,0 ,'.' ,'.')}} VND
                                                 </td>
 
-                                                <td class="col-sm-4" style="text-align : center;">
+                                                <td class="col-sm-3" style="text-align : center;">
+                                                    {{ \App\Support\PaymentMethod::label($transaction->payment_method ?? 'cod') }}
+                                                </td>
+
+                                                <td class="col-sm-3" style="text-align : center;">
                                                     <span style="color : #03A9F4;">
                                                         {{$transaction->score_awards}}
                                                         <img src="{{asset('/images/icons/diem-thuong.svg')}}" style="width : 15px; height : 15px;">
@@ -67,7 +74,7 @@ Lịch sử đặt hàng - Home Lab
                                                     </span>
                                                 </td>
 
-                                                <td class="col-sm-5" style="text-align : center; color : #03A9F4;">
+                                                <td class="col-sm-3" style="text-align : center; color : #03A9F4;">
                                                     {{number_format($transaction->amount*1000 ,0 ,'.' ,'.')}} VND
                                                 </td>
 

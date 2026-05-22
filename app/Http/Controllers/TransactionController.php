@@ -19,7 +19,14 @@ class TransactionController extends Controller
 
     public function pending()
     {
-        $transactions = Transaction::where('status', 0)->get();
+        $transactions = Transaction::where('status', 0)
+            ->where(function ($query) {
+                $query->where('payment_method', 'cod')
+                    ->orWhere(function ($q) {
+                        $q->where('payment_method', 'vnpay')->where('payment_status', 'paid');
+                    });
+            })
+            ->get();
         return view('transaction.transaction_lists_pending', ['transactions' => $transactions]);
     }
 

@@ -3,17 +3,26 @@
 namespace App\Http\Controllers\Customer;
 
 use App\Http\Controllers\Controller;
+use App\Models\Order;
+use App\Models\Product;
+use App\Models\Transaction;
+use App\Services\OrderCompletionService;
+use App\Services\VnpayService;
+use App\Support\PaymentMethod;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 use Redirect;
 use Session;
-use Validator;
-use App\Models\Product;
-use App\Models\Order;
-use App\Models\Transaction;
-use Illuminate\Support\Facades\DB;
 
 class CheckoutController extends Controller
 {
+    public function __construct(
+        private VnpayService $vnpay,
+        private OrderCompletionService $orderCompletion
+    ) {
+    }
+
     public function index()
     {
         if (Session::has('cart')) {
@@ -39,7 +48,7 @@ class CheckoutController extends Controller
                 $data['price_sale'] = $product['price_sale'];
                 $data['quantity'] = $product['qty'];
 
-                $order = Order::create($data);
+                Order::create($data);
             }
 
             $orders = Order::where('status', 0)->where('order_id', $order_id)->get();
@@ -56,6 +65,7 @@ class CheckoutController extends Controller
                 'name' => 'required|max:255',
                 'phone_number' => 'required|max:11',
                 'address' => 'required',
+                'payment_method' => 'required|in:cod,vnpay',
             ],
             [
                 'name.required' => 'Tên khách hàng không được để trống',
@@ -63,106 +73,141 @@ class CheckoutController extends Controller
                 'phone_number.required' => 'Số điện thoại không được để trống',
                 'address.required' => 'Bạn chưa nhập địa chỉ',
                 'phone_number.max' => 'Số điện thoại không quá 11 số',
+                'payment_method.required' => 'Vui lòng chọn hình thức thanh toán',
+                'payment_method.in' => 'Hình thức thanh toán không hợp lệ',
             ]
         );
 
         if ($validator->fails()) {
             return Redirect::back()->withErrors($validator);
-        } else {
-            $data['order_id'] = $request->order_id;
-            $data['amount'] = $request->amount;
-
-            if ($request->customer_id) {
-                $data['customer_id'] = $request->customer_id;
-                if ($request->score_awards == 1) {
-                    $score = DB::table('customers')->select('score_awards')->where('id', $data['customer_id'])->first();
-                    $data['score_awards'] = $score->score_awards;
-                    if ($request->score_awards_payment) {
-                        $input_score = (float) $request->score_awards_payment;
-                        if ($input_score <= 0 || $input_score > $score->score_awards) {
-                            return Redirect::back()->withErrors('Số điểm thanh toán không hợp lệ!');
-                        } else {
-                            if ($input_score <= $data['amount']) {
-                                $data['amount'] = $data['amount'] - $input_score;
-                                DB::table('customers')->where('id', $data['customer_id'])
-                                    ->update([
-                                        'score_awards' => $data['score_awards'] - $input_score,
-                                    ]);
-                                $data['score_awards'] = $input_score;
-                            } else {
-                                DB::table('customers')->where('id', $data['customer_id'])
-                                    ->update([
-                                        'score_awards' => $data['score_awards'] - $data['amount'],
-                                    ]);
-                                $data['score_awards'] = $data['amount'];
-                                $data['amount'] = 0;
-                            }
-                        }
-                    } else {
-                        return Redirect::back()->withErrors('Số điểm thanh toán không hợp lệ!');
-                    }
-                }
-            }
-
-            $data['name'] = $request->name;
-            $data['phone_number'] = $request->phone_number;
-            $data['address'] = $request->address;
-            $data['customer_notes'] = $request->note;
-
-            $order = Transaction::updateOrCreate($data);
-
-            if (Session::has('cart')) {
-                Session::forget('cart');
-            }
-
-            if ($order) {
-                $products_order_detail = DB::table('orders')
-                    ->where('order_id', $order->order_id)
-                    ->get();
-
-                foreach ($products_order_detail as $item) {
-                    $product = DB::table('products')
-                        ->select('quantity')
-                        ->where('id', $item->product_id)
-                        ->first();
-
-                    $quantity = $product->quantity - $item->quantity;
-                    if ($quantity < 0) {
-                        return Redirect::back()->withErrors('Sản phẩm ' . $product->name . ' không đáp ứng đủ số lượng! Sản phẩm này hiện có số lượng là ' . $product->quantity . '.');
-                    }
-                    DB::table('products')->where('id', $item->product_id)
-                        ->update([
-                            'quantity' => $quantity
-                        ]);
-                }
-
-                $order_detail = DB::table('orders')->where('order_id', $order->order_id)
-                    ->update([
-                        'status' => 1
-                    ]);
-
-                if ($order_detail) {
-                    return redirect('/checkout/order-received/'.$order->order_id);
-                } else {
-                    DB::table('transactions')->where('order_id', $order->order_id)
-                        ->update([
-                            'notes' => 'Lỗi hệ thống đã xảy ra',
-                            'status' => 3,
-                        ]);
-                    return view('500');
-                }
-            }
-            return view('500');
         }
+
+        $paymentMethod = $request->payment_method;
+
+        try {
+            $data = $this->buildTransactionData($request);
+        } catch (\InvalidArgumentException $e) {
+            return Redirect::back()->withErrors($e->getMessage());
+        }
+
+        if ($paymentMethod === PaymentMethod::VNPAY) {
+            return $this->placeVnpayOrder($request, $data);
+        }
+
+        return $this->placeCodOrder($request, $data);
     }
 
-    public function orderReceived($order_id){
+    public function orderReceived($order_id)
+    {
         $order = Transaction::where('order_id', $order_id)->first();
         $order_detail = Order::where('order_id', $order_id)->where('status', 1)->get();
-        if(isset($order) && isset($order_detail)){
-            return view('order_received', ['success' => 'Đơn hàng của bạn đã được tiếp nhận',
-                                           'order' => $order, 'order_detail' => $order_detail]);
+
+        if ($order && $order->payment_method === PaymentMethod::VNPAY && $order->payment_status !== 'paid') {
+            return redirect('/checkout/payment')->withErrors('Đơn hàng chưa được thanh toán qua VNPay.');
+        }
+
+        if (isset($order) && $order_detail->isNotEmpty()) {
+            return view('order_received', [
+                'success' => 'Đơn hàng của bạn đã được tiếp nhận',
+                'order' => $order,
+                'order_detail' => $order_detail,
+            ]);
         }
         return view('404');
+    }
+
+    private function buildTransactionData(Request $request): array
+    {
+        $data = [
+            'order_id' => $request->order_id,
+            'amount' => $request->amount,
+            'name' => $request->name,
+            'phone_number' => $request->phone_number,
+            'address' => $request->address,
+            'customer_notes' => $request->note,
+            'score_awards' => 0,
+        ];
+
+        if ($request->customer_id) {
+            $data['customer_id'] = $request->customer_id;
+            if ($request->score_awards == 1) {
+                $score = DB::table('customers')->select('score_awards')->where('id', $data['customer_id'])->first();
+                $data['score_awards'] = $score->score_awards;
+                if ($request->score_awards_payment) {
+                    $input_score = (float) $request->score_awards_payment;
+                    if ($input_score <= 0 || $input_score > $score->score_awards) {
+                        throw new \InvalidArgumentException('Số điểm thanh toán không hợp lệ!');
+                    }
+                    if ($input_score <= $data['amount']) {
+                        $data['amount'] = $data['amount'] - $input_score;
+                        DB::table('customers')->where('id', $data['customer_id'])
+                            ->update(['score_awards' => $data['score_awards'] - $input_score]);
+                        $data['score_awards'] = $input_score;
+                    } else {
+                        DB::table('customers')->where('id', $data['customer_id'])
+                            ->update(['score_awards' => $data['score_awards'] - $data['amount']]);
+                        $data['score_awards'] = $data['amount'];
+                        $data['amount'] = 0;
+                    }
+                } else {
+                    throw new \InvalidArgumentException('Số điểm thanh toán không hợp lệ!');
+                }
+            }
+        }
+
+        return $data;
+    }
+
+    private function placeCodOrder(Request $request, array $data)
+    {
+        $data = array_merge($data, [
+            'payment_method' => PaymentMethod::COD,
+            'payment_status' => 'pending',
+        ]);
+
+        $transaction = Transaction::updateOrCreate(
+            ['order_id' => $data['order_id']],
+            $data
+        );
+
+        if (Session::has('cart')) {
+            Session::forget('cart');
+        }
+
+        if (!$transaction) {
+            return view('500');
+        }
+
+        if (!$this->orderCompletion->complete($transaction)) {
+            return Redirect::back()->withErrors('Sản phẩm không đáp ứng đủ số lượng trong kho.');
+        }
+
+        return redirect('/checkout/order-received/' . $transaction->order_id);
+    }
+
+    private function placeVnpayOrder(Request $request, array $data)
+    {
+        if ((float) $data['amount'] <= 0) {
+            return Redirect::back()->withErrors('Đơn hàng đã thanh toán bằng điểm thưởng, không cần thanh toán VNPay.');
+        }
+
+        $data = array_merge($data, [
+            'payment_method' => PaymentMethod::VNPAY,
+            'payment_status' => 'pending',
+            'status' => 0,
+        ]);
+
+        $transaction = Transaction::updateOrCreate(
+            ['order_id' => $data['order_id']],
+            $data
+        );
+
+        if (Session::has('cart')) {
+            Session::forget('cart');
+        }
+
+        $paymentUrl = $this->vnpay->buildPaymentUrl($transaction, $request->ip());
+
+        return redirect()->away($paymentUrl);
     }
 }

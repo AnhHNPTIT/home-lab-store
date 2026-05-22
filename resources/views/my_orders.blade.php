@@ -14,7 +14,14 @@ Chi tiết đơn hàng - Home Lab
             <div class="em-main-container em-col2-left-layout">
                 <div class="row">
                     <div class="col-sm-18 col-sm-push-6 em-col-main clearfix">
-                        @if(isset($order_detail))
+                        @if(isset($order_detail) && isset($order))
+                        <div class="alert" style="background:#f9f9f9; border:1px solid #ececec; margin-bottom:15px;">
+                            <p><strong>Mã đơn:</strong> {{ $order->order_id }}</p>
+                            <p><strong>Hình thức thanh toán:</strong> {{ \App\Support\PaymentMethod::labelLong($order->payment_method ?? 'cod') }}</p>
+                            @if(($order->payment_method ?? 'cod') === 'vnpay')
+                            <p><strong>Trạng thái VNPay:</strong> {{ \App\Support\PaymentMethod::paymentStatusLabel($order->payment_status) }}</p>
+                            @endif
+                        </div>
                         <div>
                             <form id="wishlist-view-form">
                                 @csrf

@@ -6,6 +6,102 @@ Thanh toán - Home Lab
 
 @section('css')
 <link rel="stylesheet" type="text/css" href="{{asset('home/css/upload.css')}}">
+<style>
+    .payment-method-group {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        padding: 4px 0 8px;
+    }
+
+    .payment-method-option {
+        display: flex;
+        align-items: flex-start;
+        gap: 14px;
+        padding: 14px 16px;
+        margin: 0;
+        border: 1px solid #e5e5e5;
+        border-radius: 8px;
+        background: #fff;
+        cursor: pointer;
+        transition: border-color 0.2s, background-color 0.2s;
+        font-weight: 400;
+        line-height: 1.45;
+    }
+
+    .payment-method-option:hover {
+        border-color: #c5d4b8;
+        background: #fafbf9;
+    }
+
+    .payment-method-option input[type="radio"] {
+        position: absolute;
+        opacity: 0;
+        width: 0;
+        height: 0;
+        margin: 0;
+        pointer-events: none;
+    }
+
+    .payment-method-indicator {
+        flex-shrink: 0;
+        width: 20px;
+        height: 20px;
+        margin-top: 2px;
+        border: 2px solid #bdbdbd;
+        border-radius: 50%;
+        background: #fff;
+        position: relative;
+        box-sizing: border-box;
+    }
+
+    .payment-method-option input[type="radio"]:checked + .payment-method-indicator {
+        border-color: #3E6807;
+    }
+
+    .payment-method-option input[type="radio"]:checked + .payment-method-indicator::after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 10px;
+        height: 10px;
+        margin: -5px 0 0 -5px;
+        border-radius: 50%;
+        background: #3E6807;
+    }
+
+    .payment-method-option input[type="radio"]:checked ~ .payment-method-text .payment-method-title {
+        color: #3E6807;
+    }
+
+    .payment-method-option:has(input[type="radio"]:checked) {
+        border-color: #3E6807;
+        background: #f6faf3;
+    }
+
+    .payment-method-text {
+        flex: 1;
+        min-width: 0;
+        display: block;
+        padding: 0;
+    }
+
+    .payment-method-title {
+        display: block;
+        font-size: 15px;
+        font-weight: 600;
+        color: #222;
+        margin-bottom: 2px;
+    }
+
+    .payment-method-desc {
+        display: block;
+        font-size: 13px;
+        color: #666;
+        font-weight: 400;
+    }
+</style>
 @endsection
 
 @section('js')
@@ -78,6 +174,29 @@ $subtotal += $order->price_sale * $order->quantity;
                                                                     <textarea name="note" class="form-control" id="getNote" style="width: 100%; height : 100px; color: #111; font-size: 16px; line-height : 30px;"></textarea><br>
                                                                 </div>
                                                             </li>
+                                                            <li class="wide">
+                                                                <label class="required"><em>*</em>Hình thức thanh toán</label>
+                                                                <div class="input-box">
+                                                                    <div class="payment-method-group">
+                                                                        <label class="payment-method-option">
+                                                                            <input type="radio" name="payment_method" value="cod" checked>
+                                                                            <span class="payment-method-indicator"></span>
+                                                                            <span class="payment-method-text">
+                                                                                <span class="payment-method-title">COD</span>
+                                                                                <span class="payment-method-desc">Thanh toán khi nhận hàng</span>
+                                                                            </span>
+                                                                        </label>
+                                                                        <label class="payment-method-option">
+                                                                            <input type="radio" name="payment_method" value="vnpay">
+                                                                            <span class="payment-method-indicator"></span>
+                                                                            <span class="payment-method-text">
+                                                                                <span class="payment-method-title">VNPay</span>
+                                                                                <span class="payment-method-desc">Thanh toán online qua cổng VNPay</span>
+                                                                            </span>
+                                                                        </label>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
 
                                                             <input id="getUserId" type="hidden" name="customer_id" value="{{Auth::user()->id}}" class="form-control">
                                                             <input id="getAmount" type="hidden" name="amount" value="{{$subtotal}}" class="form-control">
@@ -126,6 +245,29 @@ $subtotal += $order->price_sale * $order->quantity;
                                                                 <label for="email" class="required">Ghi chú cho đơn hàng (Không bắt buộc)</label>
                                                                 <div class="input-box">
                                                                     <textarea name="note" class="form-control" id="getNote" style="width: 100%; height : 100px;" value="{{ old('note') }}"></textarea><br>
+                                                                </div>
+                                                            </li>
+                                                            <li class="wide">
+                                                                <label class="required"><em>*</em>Hình thức thanh toán</label>
+                                                                <div class="input-box">
+                                                                    <div class="payment-method-group">
+                                                                        <label class="payment-method-option">
+                                                                            <input type="radio" name="payment_method" value="cod" {{ old('payment_method', 'cod') === 'cod' ? 'checked' : '' }}>
+                                                                            <span class="payment-method-indicator"></span>
+                                                                            <span class="payment-method-text">
+                                                                                <span class="payment-method-title">COD</span>
+                                                                                <span class="payment-method-desc">Thanh toán khi nhận hàng</span>
+                                                                            </span>
+                                                                        </label>
+                                                                        <label class="payment-method-option">
+                                                                            <input type="radio" name="payment_method" value="vnpay" {{ old('payment_method') === 'vnpay' ? 'checked' : '' }}>
+                                                                            <span class="payment-method-indicator"></span>
+                                                                            <span class="payment-method-text">
+                                                                                <span class="payment-method-title">VNPay</span>
+                                                                                <span class="payment-method-desc">Thanh toán online qua cổng VNPay</span>
+                                                                            </span>
+                                                                        </label>
+                                                                    </div>
                                                                 </div>
                                                             </li>
 

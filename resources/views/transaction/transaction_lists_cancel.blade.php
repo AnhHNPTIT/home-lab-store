@@ -26,6 +26,7 @@ Cancel Transactions
               <th class="col-sm-1" style="text-align : center;">Mã đơn hàng</th>
               <th class="col-sm-2" style="text-align : center;">Số điện thoại <br> (Thông tin chi tiết)</th>
               <th class="col-sm-2" style="text-align : center;">Thời gian đặt hàng</th>
+              <th class="col-sm-1" style="text-align : center;">Thanh toán</th>
               <th class="col-sm-2" style="text-align : center;">Tổng tiền</th>
               <th class="col-sm-2" style="text-align : center;">Người hủy</th>
               <th class="col-sm-1" style="text-align : center;">Ghi chú</th>
@@ -43,7 +44,7 @@ Cancel Transactions
                 </button>
               </td>
               <td class="col-sm-2" style="text-align : center;">{{$value->created_at}}</td>
-
+              <td class="col-sm-1" style="text-align : center;">@include('partials.payment_method_display', ['transaction' => $value])</td>
               <td class="col-sm-2" style="text-align : center;">{{number_format(($value->amount+$value->score_awards)*1000 ,0 ,'.' ,'.')}} VND</td>
               <td class="col-sm-2" style="text-align : center;">
                 {{$value->manager}}

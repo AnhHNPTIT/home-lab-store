@@ -27,6 +27,7 @@ transactions List
               <th class="col-sm-2" style="text-align: center;">Họ và tên</th>
               <th class="col-sm-2" style="text-align: center;">Số điện thoại</th>
               <th class="col-sm-2" style="text-align: center;">Thời gian đặt hàng</th>
+              <th class="col-sm-1" style="text-align: center;">Thanh toán</th>
               <th class="col-sm-2" style="text-align: center;">Tổng thanh toán</th>
               <th class="col-sm-2" style="text-align: center;">Trạng thái</th>
             </tr>
@@ -39,6 +40,7 @@ transactions List
               <td class="col-sm-2">{{$value->name}}</td>
               <td class="col-sm-2" style="text-align: right;">{{$value->phone_number}}</td>
               <td class="col-sm-2" style="text-align: right;">{{$value->created_at}}</td>
+              <td class="col-sm-1" style="text-align: center;">@include('partials.payment_method_display', ['transaction' => $value])</td>
               <td class="col-sm-2" style="text-align: right;">{{number_format(($value->amount+$value->score_awards)*1000 ,0 ,'.' ,'.')}} VND</td>
               <td class="col-sm-2" style="text-align : center;">
                 @if($value->status == 0)

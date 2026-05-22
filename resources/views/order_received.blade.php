@@ -59,7 +59,7 @@
                                         @endif
                                         <div class="block-content" style="padding-top : 20px; padding-bottom : 20px;">
                                             <div class="col-sm-16">
-                                                <strong><span>Thanh toán tiền mặt :</span></strong>
+                                                <strong><span>{{ ($order->payment_method ?? 'cod') === 'vnpay' ? 'Đã thanh toán VNPay' : 'Thanh toán COD' }} :</span></strong>
                                             </div>
                                             <div class="col-sm-8">
                                                 <strong><span style="color : #ff0202;">{{number_format($order->amount*1000 ,0 ,'.' ,'.')}} VND</span></strong>
@@ -105,12 +105,22 @@
                                     </div>
                                     <div class="block-content" style="border-bottom: 1px solid #ececec;">
                                         <div class="col-sm-12">
-                                            <strong><span>Phương thức thanh toán</span></strong>
+                                            <strong><span>Hình thức thanh toán</span></strong>
                                         </div>
                                         <div class="col-sm-12">
-                                            <strong><span>Thanh toán tiền mặt</span></strong>
+                                            <strong><span>{{ \App\Support\PaymentMethod::labelLong($order->payment_method ?? 'cod') }}</span></strong>
                                         </div>
                                     </div>
+                                    @if(($order->payment_method ?? 'cod') === 'vnpay' && $order->payment_status === 'paid')
+                                    <div class="block-content" style="border-bottom: 1px solid #ececec;">
+                                        <div class="col-sm-12">
+                                            <strong><span>Trạng thái VNPay</span></strong>
+                                        </div>
+                                        <div class="col-sm-12">
+                                            <strong><span style="color:#34e607;">{{ \App\Support\PaymentMethod::paymentStatusLabel($order->payment_status) }}</span></strong>
+                                        </div>
+                                    </div>
+                                    @endif
                                 </div>
                             </div>
                         </div><!-- /.em-sidebar -->
