@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;  
-use App\Models\Customer;
 use App\Models\Admin;
-use Validator;
+use App\Models\Customer;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Http\Request;
+use Validator;
 
 class UserController extends Controller
 {
@@ -16,10 +16,23 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function customer()
+    public function customer(Request $request)
     {
-        $customers = DB::table('customers')->orderBy('created_at', 'desc');
-        return view('user.customers_list', ['customers' => $customers->paginate()]);
+        $parameter = $request->query('group');
+        $allowedGroups = ['new_customer', 'potential_customer', 'loyal_customer'];
+
+        if (! in_array($parameter, $allowedGroups, true)) {
+            $parameter = null;
+        }
+
+        $customers = Customer::query()->orderBy('created_at', 'desc');
+
+        $this->applyCustomerGroupFilter($customers, $parameter);
+
+        return view('user.customers_list', [
+            'customers' => $customers->get(),
+            'parameter' => $parameter,
+        ]);
     }
 
     public function collaborator()
@@ -91,15 +104,12 @@ class UserController extends Controller
 
     public function show($id)
     {
-        $customer = Customer::find($id);
-        return $customer;
+        return response()->json(Customer::findOrFail($id));
     }
 
     public function updateCustomer(Request $request, $id)
-    {       
-        $data = $request->all();
-        unset($data['_token']);
-        $customer = Customer::find($data['id']);
+    {
+        $customer = Customer::findOrFail($id);
 
         if ($customer->status == 0) {
             $customer->status = 1;
@@ -109,19 +119,44 @@ class UserController extends Controller
 
         $flag = $customer->save();
         if ($flag) {
-            return response()->json(['is' => 'success', 'complete' => 'Một khách hàng đã được cập nhật trạng thái thành công']);
-        }
-        return response()->json(['is' => 'unsuccess', 'uncomplete' => 'Một khách hàng chưa được cập nhật trạng thái']);
+            $message = 'Một khách hàng đã được cập nhật trạng thái thành công';
 
+            if ($request->expectsJson()) {
+                return response()->json(['is' => 'success', 'complete' => $message]);
+            }
+
+            return redirect()->back()->with('success', $message);
+        }
+
+        $message = 'Một khách hàng chưa được cập nhật trạng thái';
+
+        if ($request->expectsJson()) {
+            return response()->json(['is' => 'unsuccess', 'uncomplete' => $message], 500);
+        }
+
+        return redirect()->back()->with('error', $message);
     }
 
-    public function destroyCustomer($id)
+    public function destroyCustomer(Request $request, $id)
     {
         $customer = Customer::findOrFail($id)->delete();
-        if($customer){
-            return response()->json(['is' => 'success', 'complete'=>'Một khách hàng đã được xóa thành công']);
+        if ($customer) {
+            $message = 'Một khách hàng đã được xóa thành công';
+
+            if ($request->expectsJson()) {
+                return response()->json(['is' => 'success', 'complete' => $message]);
+            }
+
+            return redirect()->route('admin.customers.index')->with('success', $message);
         }
-        return response()->json(['is' => 'unsuccess', 'uncomplete'=>'Một khách hàng chưa được xóa thành công']);
+
+        $message = 'Một khách hàng chưa được xóa thành công';
+
+        if ($request->expectsJson()) {
+            return response()->json(['is' => 'unsuccess', 'uncomplete' => $message], 500);
+        }
+
+        return redirect()->back()->with('error', $message);
     }
 
     public function showCollaborator($id)
@@ -243,10 +278,13 @@ class UserController extends Controller
         return view('admin.report_customer', ['customers' => $customers]);
     }
 
-    public function filterCustomer(Request $request){
-        $parameter = $request->id;
-        $customers = Customer::query();
-    
+    public function filterCustomer($group)
+    {
+        return redirect()->route('admin.customers.index', ['group' => $group]);
+    }
+
+    private function applyCustomerGroupFilter(Builder $customers, ?string $parameter): void
+    {
         switch ($parameter) {
             case 'new_customer':
                 $customers->where('money_payment_transactions', '=', 0);
@@ -258,13 +296,6 @@ class UserController extends Controller
             case 'loyal_customer':
                 $customers->where('money_payment_transactions', '>', 5000);
                 break;
-            default:
-                // Handle default case if needed
-                break;
         }
-    
-        $customers = $customers->get();
-    
-        return view('user.customers_list', ['parameter' => $parameter, 'customers' => $customers]);
     }
 }

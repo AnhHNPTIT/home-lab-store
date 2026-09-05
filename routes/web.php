@@ -253,15 +253,12 @@ Route::group(['prefix' => 'admin', 'middleware' => 'CheckAdmin'], function () {
 	Route::put('/update-status-contact/{id}', [ContactController::class, 'updateStatus']);
 
 	// customer member 
-	Route::get('/list_customers', function () {
-		return view('user.customers_list');
-	});
-	Route::post('/list_customers/{id}', [UserController::class, 'filterCustomer']);
-	Route::get('/list_customers/{id}', [UserController::class, 'filterCustomer']);
-	Route::get('/user/customer', [UserController::class, 'customer']);
-	Route::put('/user/customer/{id}', [UserController::class, 'updateCustomer']);
-	Route::delete('/user/customer/{id}', [UserController::class, 'destroyCustomer']);
-	Route::get('/user/customer/{id}', [UserController::class, 'show']);
+	Route::redirect('/list_customers', '/admin/user/customer');
+	Route::match(['get', 'post'], '/list_customers/{group}', [UserController::class, 'filterCustomer']);
+	Route::get('/user/customer', [UserController::class, 'customer'])->name('admin.customers.index');
+	Route::put('/user/customer/{id}', [UserController::class, 'updateCustomer'])->name('admin.customers.update-status');
+	Route::delete('/user/customer/{id}', [UserController::class, 'destroyCustomer'])->name('admin.customers.destroy');
+	Route::get('/user/customer/{id}', [UserController::class, 'show'])->name('admin.customers.show');
 	Route::get('/report_customer', [UserController::class, 'reportCustomer']);
 });
 

@@ -7,7 +7,6 @@ Danh sách khách hàng
 @section('content')
 <!-- Main content -->
 <section class="content">
-	@csrf
 	<div class="row">
 		<div class="col-xs-12">
 			<div class="box">
@@ -16,71 +15,34 @@ Danh sách khách hàng
 				</div>
 				<!-- /.box-header -->
 				<div class="box-body">
-					<div style="margin-bottom: 30px;">
-						@if(isset($parameter))
-						@if($parameter == 'new_customer')
-							<div class="col-xs-3">
-								<input type="radio" id="new_customer" name="customer" value="new_customer" checked = "checked">
-								<label for="new_customer">Khách hàng mới</label><br>
-							</div>
-							<div class="col-xs-3">
-								<input type="radio" id="potential_customer" name="customer" value="potential_customer">
-								<label for="potential_customer">Khách hàng tiềm năng</label><br>
-							</div>
-							<div class="col-xs-3">
-								<input type="radio" id="loyal_customer" name="customer" value="loyal_customer">
-								<label for="loyal_customer">Khách hàng trung thành</label>
-							</div>
-						@elseif($parameter == 'potential_customer')
-							<div class="col-xs-3">
-								<input type="radio" id="new_customer" name="customer" value="new_customer">
-								<label for="new_customer">Khách hàng mới</label><br>
-							</div>
-							<div class="col-xs-3">
-								<input type="radio" id="potential_customer" name="customer" value="potential_customer" checked = "checked">
-								<label for="potential_customer">Khách hàng tiềm năng</label><br>
-							</div>
-							<div class="col-xs-3">
-								<input type="radio" id="loyal_customer" name="customer" value="loyal_customer">
-								<label for="loyal_customer">Khách hàng trung thành</label>
-							</div>
-						@elseif($parameter == 'loyal_customer')
-							<div class="col-xs-3">
-								<input type="radio" id="new_customer" name="customer" value="new_customer">
-								<label for="new_customer">Khách hàng mới</label><br>
-							</div>
-							<div class="col-xs-3">
-								<input type="radio" id="potential_customer" name="customer" value="potential_customer">
-								<label for="potential_customer">Khách hàng tiềm năng</label><br>
-							</div>
-							<div class="col-xs-3">
-								<input type="radio" id="loyal_customer" name="customer" value="loyal_customer" checked = "checked">
-								<label for="loyal_customer">Khách hàng trung thành</label>
-							</div>
-						@endif
-							<div class="col-xs-3">
-								<button type="button" class="btn btn-info btn-search" >Tìm kiếm</button>
-							</div>
-						@else
-							<div class="col-xs-3">
-								<input type="radio" id="new_customer" name="customer" value="new_customer">
-								<label for="new_customer">Khách hàng mới</label><br>
-							</div>
-							<div class="col-xs-3">
-								<input type="radio" id="potential_customer" name="customer" value="potential_customer">
-								<label for="potential_customer">Khách hàng tiềm năng</label><br>
-							</div>
-							<div class="col-xs-3">
-								<input type="radio" id="loyal_customer" name="customer" value="loyal_customer">
-								<label for="loyal_customer">Khách hàng trung thành</label>
-							</div>
-							<div class="col-xs-3">
-								<button type="button" class="btn btn-info btn-search" >Tìm kiếm</button>
-							</div>
-						@endif
+					@if(session('success'))
+						<div class="alert alert-success">{{ session('success') }}</div>
+					@endif
+					@if(session('error'))
+						<div class="alert alert-danger">{{ session('error') }}</div>
+					@endif
 
-
-					</div>
+					<form method="GET" action="{{ route('admin.customers.index') }}" class="row" style="margin-bottom: 30px;">
+						<div class="col-xs-2">
+							<input type="radio" id="all_customers" name="group" value="" {{ empty($parameter) ? 'checked' : '' }}>
+							<label for="all_customers">Tất cả</label>
+						</div>
+						<div class="col-xs-2">
+							<input type="radio" id="new_customer" name="group" value="new_customer" {{ $parameter === 'new_customer' ? 'checked' : '' }}>
+							<label for="new_customer">Khách hàng mới</label>
+						</div>
+						<div class="col-xs-3">
+							<input type="radio" id="potential_customer" name="group" value="potential_customer" {{ $parameter === 'potential_customer' ? 'checked' : '' }}>
+							<label for="potential_customer">Khách hàng tiềm năng</label>
+						</div>
+						<div class="col-xs-3">
+							<input type="radio" id="loyal_customer" name="group" value="loyal_customer" {{ $parameter === 'loyal_customer' ? 'checked' : '' }}>
+							<label for="loyal_customer">Khách hàng trung thành</label>
+						</div>
+						<div class="col-xs-2">
+							<button type="submit" class="btn btn-info btn-search">Tìm kiếm</button>
+						</div>
+					</form>
 					<br>
 					<table id="list-customers" class="table table-bordered table-striped" style="margin-top : 10px;">
 						<thead>
@@ -113,15 +75,19 @@ Danh sách khách hàng
 									{{Carbon\Carbon::parse($value->created_at)->diffForHumans()}}
 								</td> -->
 								<td class="col-sm-1" style="text-align: center;">
+									<form method="POST" action="{{ route('admin.customers.update-status', $value->id) }}" style="display: inline;">
+										@csrf
+										@method('PUT')
 									@if($value->status == 0)
-									<button data-id="{{$value->id}}" type="button" title="Kích hoạt sử dụng" class="btn btn-warning btn-edit" >
+									<button type="submit" title="Kích hoạt sử dụng" class="btn btn-warning btn-edit">
 										<i class="fa fa-unlock"></i>
 									</button>
 									@else
-									<button data-id="{{$value->id}}" type="button" title="Tạm dừng hoạt động" class="btn btn-success btn-edit" >
+									<button type="submit" title="Tạm dừng hoạt động" class="btn btn-success btn-edit">
 										<i class="fa fa-stop-circle"></i>
 									</button>
 									@endif
+									</form>
 								</td>
 							</tr>
 							@endforeach
@@ -144,29 +110,6 @@ Danh sách khách hàng
     		} );
     	} );
     </script>
-
-	<script type="text/javascript">
-		// search
-		$('.btn-search').click(function(){
-			var $radio = $('input[name=customer]:checked');
-			var customer = $radio.val();
-			var id = $radio.attr('id');
-			$.ajax({
-				type: 'post',
-				url: '/admin/list_customers/' + id,
-				data:{
-					_token :$('[name="_token"]').val(),
-					id : id,
-				},
-				success: function(response){
-					setTimeout(function() {
-						window.location.href = "/admin/list_customers/" + id;
-					}, 1000);
-				}
-			});
-		});
-	</script>
-	<script type="text/javascript" src="{{asset('home/js/sweetalert.min.js')}}"></script>
 </section>
 <!-- /.content -->
 @endsection
